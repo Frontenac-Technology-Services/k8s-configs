@@ -5,6 +5,7 @@ metadata:
     app.kubernetes.io/name: argocd-cm
     app.kubernetes.io/part-of: argocd
   name: argocd-cm
+  namespace: argocd
 data:
   resource.customizations.health.bitnami.com_SealedSecret: |
     hs = {}
@@ -12,7 +13,6 @@ data:
     hs.message = "Controller doesn't report resource status"
     return hs
   url: "https://argocd.k8s.frontenac.tech"
-  admin.enabled: "false"
   accounts.noah: apiKey, login
   accounts.noah.enabled: "true"
 ---
@@ -23,6 +23,7 @@ metadata:
     app.kubernetes.io/name: argocd-rbac-cm
     app.kubernetes.io/part-of: argocd
   name: argocd-rbac-cm
+  namespace: argocd
 data:
   policy.default: role:admin
 ---
@@ -86,7 +87,9 @@ metadata:
   namespace: argocd
 spec:
   encryptedData:
+    name: AgCajoQNquAQ/p23e8zMQY2KadSbpPySpfU9J4wQhNdjd7GXNc8m7S3NZ/96i42oh7+VpdWDVJadlJS2NrKyFewadiumCSbQZPEocfUqz5OERS3YvnGPIJ3koaVNJq4uM584m7jP4GaO8VAd2RhTdX4c1oNN2oIr8scJmhUKTl+SyRox3GlyHSgTguI2L3XqiuPUMwfhiSFHIEutZQlrete0T5TCwwvYuBn7S79AB0pHhLCRqbBwanxZN6z4PBsfJUR4Tzej/EbHtD6q6syxqJMMLIA08VN2RMRsKCYp1PbqFrH+rvAcAHM5DtI0t2gua49EO4qsMnS+GDeV+NLtj6crLG4rtrsUYzYuxNc+MdwtEBG9ylTXcg9S8RPJtbLtvkFea6DQA+T+YrpFYZjYzqHOQxr+IjE7YIzgObTpk16SpJ8KlDDiS76G3x/P90LzD4xcAEiaP4luWMJoTPnMja7MzvaW2Zb6nPhNmQvCQkP5d0FgPoNLc5+gTzdnEhfkxG4p+PNZycn41dVjF6A5bMT3j7W0J6uBD6rNmmJB/eC/gOhGRU2KSJaEiuwnAU9mzHUadrAAnI99vJnmAyEGaxJHfwLGYtOaAqxhiP31BKjZUfZ0K3HcXMq/dJqNxDouGddwpwn1HTYVpejqS6Y++ICXlhd1GxfK9YBBa1o938aQw9+NGapb7um0kIYcUBFYNBuuGVvM9v1h8mV+
     sshPrivateKey: AgB2tWGE6WpLcCGMjrPVo+f4dyqTdEpYT4r7ioBkRbQkatnjW1Z+YqtL++vJKk+0TaCkHvxK/ZLbgfcpqr0QgGZtEKq8D4albN9bbGVLk2xXd5qu4d4Vpz1vuvyQS67znN9s82wINGnzkvhVWqAvwr2/kTEIiic/F/3kxcoG+/zR4Auqmg+CCyTVv44bh+lX9suD9H2RVCiziX0HTfFS1iAvI1ch2amfBxWx1kRLE/NG+efy7i8KPRSAJyVhZ/AMZgyEvoasGfaUlfUrpn2BusXm1rlSTQhX16fOW6g3emS7+Za2K5P/CQJxGxjLrC+uUFzqyD83oPTG3OcGOVXNlEv9VadCOsLRkpqzFJW4/SBbYWLvr8zHR/+CccNmjbCpri+wyxL9/3aJf2c598zCmthy9JYAeHE4SxEElQXYoPozy40i7o+mt8tng4JnBVfhqUk6nBlW2LU54Kg6Th40+rM/neHNfiaG+cR6WU8766Qq6YNQKrP+o4BvFRo+Mf3cKbP8BHVB5qkbHTE13+A6qlHjzIVwa7wvlfTJu2KRcG9ovPp2rN86j03YiXQN2tCTT6Kdx7WnMAcyRBZY0rSKAeonS+k5J59FiCflTSossrU0lVNldt2i7fah5i/pgovrAPinhkfVznydS7jpA4pf2OK8VPeMEib1o/cKgvk6jwtA4qalc71bpFWOALoGEbHaOR8Epp5i02JLsel68oj+fJvJEyN7Ll9m2H8XuhMyiS48tBV14hXd5WB9nIg7FXoroJpICB0MVK95f6tZ2ZQm7KNcyzfRGdmzxRP7aPho9JKe/u5KnnSWeZElY2O8ZOZFDuAAQknY/+fyukU4D2rEkzSPPZeufz2m1Nu7uWwLtGkU0WStdhrBXxGzo/czwzD9F49R8uSY0a/lWKvxHS2iGltv2egt+OuQHJ5ea68o3CCYXqm7nmg/VqawrCM7PHWGdenF2iO0uP25faoh2vJe+dsRqLS5whZWkJN7vPi2xejfDFHhMakem2aEKOoNmvmGxcjEKN/4FCU58yVKa9xIUpGwRBvO7z4vKbteg6eMT2HgWhOweNx/nOSsj3NFpHjpZAEJsIKgmRiKHeKzx82/CpeOgeHDH0ihM62scOl65XhOGwSZY5mjQ4ESnEY98CT+X7m9fj9FpxY4PA9oNVoZEhrPtlML0FStHJ61Y/NEo2FGy4pFZyoflSRd1oAWAXEzF3G5HLe1N7nchQz23RJ2QNQ=
+    url: AgBBNwi3gdWFhs3R8buMxJhu/yIk1QYExZSPwZ0nXCqFwgQ6l4T95jFwk+C9bZzLdMxnX6NAvtKmJ5zb+M9d4T7yiW2dGzSbNBwsXEZaL+zpAD5EZ8J9jimLb3ypC9vJB0azScBBkDisnSBTlv8xrQFyfrjV5qnNZJbxgE9PID0RKQMPQbV7HCPMZfRxJxE5zluAa5o8Y8FCruVWo4oFssRsweE56Gm+Q3tfZrb5M4XRW7e5ojtoQUHvB6x0r9CNG/cGf28UXdm1234wOJhWzgIn0ifvKKCDiJ5ngKKCVH9pJ8M7Aw28Oy0CJVspgarO5DBKLokpthsG6eOkmi8keclv9B+IGpXIpbgVP7pAVDjXQDEGgwfYXC/MpzjZHORyj3HzpJSVeOoIv3Q2BZlGOLE6b28CLaEQZ7zvq/irHAPEnOEKqcco6sfF6PKNIudmNjqmm4dto4lxs811RRjwI6FwHt6L4roPqBk5Cy6JQevMlRkHBo70LG2hMHbAsY9G2+PU6o/mIU9xH6TJbXfBbGGtuIeIresnYgs0y8M6KPhygw0XnKBxo9oFfblRl5jJJ77NIU9XEq7OKTlybqr1JGjHiKRk40TTcRHkVDALbHLQrOLR+2LqAbXFtzS9WCsdNrMWdQfw/DDiPSZq7qXgaZX/EQojet0SGsOVcRdVmZJPHSXWcW8QvXe6mGDkbjtuTm8IbMR1PPp6yhmUlNMC85RUAJV2schZkPMko+5h39GCe/57sP0EY3mHh+b/Wg==
   template:
     data: null
     metadata:
@@ -112,7 +115,7 @@ spec:
     automated: {} # Keep all of the resources this project deploys in-sync automatically
   source:
     repoURL: git@github.com:Frontenac-Technology-Services/configurations.git
-    targetRevision: main # Use the main branch
+    targetRevision: master # Use the master branch
     path: apps # Deploy argo resources from the /argo path
     # Deploy project and application type resources as raw kubernetes manifests from the source path recursively
     directory:
