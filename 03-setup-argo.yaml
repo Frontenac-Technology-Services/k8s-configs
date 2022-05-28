@@ -74,30 +74,6 @@ spec:
       creationTimestamp: null
       name: webhook-secret
       namespace: argocd
-
----
-# Bootstrap Application
-# Create ArgoCD bootstrap application (App of Apps)
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: bootstrap
-  namespace: argocd
-spec:
-  project: default
-  syncPolicy:
-    automated: {} # Keep all of the resources this project deploys in-sync automatically
-  source:
-    repoURL: git@github.com:Frontenac-Technology-Services/configurations.git
-    targetRevision: main # Use the main branch
-    path: apps # Deploy argo resources from the /argo path
-    # Deploy project and application type resources as raw kubernetes manifests from the source path recursively
-    directory:
-      recurse: true
-  # Deploy to the local ArgoCD Cluster in the argocd namespace
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: argocd
 ---
 # ArgoCD Github Credentials
 apiVersion: bitnami.com/v1alpha1
@@ -122,3 +98,26 @@ spec:
       name: fts-ssh-github-creds
       namespace: argocd
     type: Opaque
+---
+# Bootstrap Application
+# Create ArgoCD bootstrap application (App of Apps)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bootstrap
+  namespace: argocd
+spec:
+  project: default
+  syncPolicy:
+    automated: {} # Keep all of the resources this project deploys in-sync automatically
+  source:
+    repoURL: git@github.com:Frontenac-Technology-Services/configurations.git
+    targetRevision: main # Use the main branch
+    path: apps # Deploy argo resources from the /argo path
+    # Deploy project and application type resources as raw kubernetes manifests from the source path recursively
+    directory:
+      recurse: true
+  # Deploy to the local ArgoCD Cluster in the argocd namespace
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
