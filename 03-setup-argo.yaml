@@ -116,7 +116,7 @@ spec:
   source:
     repoURL: git@github.com:Frontenac-Technology-Services/configurations.git
     targetRevision: master # Use the master branch
-    path: apps # Deploy argo resources from the /argo path
+    path: argo # Deploy argo resources from the /argo path
     # Deploy project and application type resources as raw kubernetes manifests from the source path recursively
     directory:
       recurse: true
