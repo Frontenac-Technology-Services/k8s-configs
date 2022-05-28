@@ -1,0 +1,124 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+  name: argocd-cm
+data:
+  resource.customizations.health.bitnami.com_SealedSecret: |
+    hs = {}
+    hs.status = "Healthy"
+    hs.message = "Controller doesn't report resource status"
+    return hs
+  url: "https://argocd.k8s.frontenac.tech"
+  admin.enabled: "false"
+  accounts.noah: apiKey, login
+  accounts.noah.enabled: "true"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: argocd-rbac-cm
+    app.kubernetes.io/part-of: argocd
+  name: argocd-rbac-cm
+data:
+  policy.default: role:admin
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server-ingress
+  namespace: argocd
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"  # Fixes infinite 307 redirects
+spec:
+  rules:
+  - host: argocd.k8s.frontenac.tech
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: argocd-server
+            port: 
+              name: https
+  tls:
+  - hosts:
+    - argocd.k8s.frontenac.tech
+    secretName: argocd-secret
+
+---
+# ArgoCD Webhook Sealed Secret https://argo-cd.readthedocs.io/en/stable/operator-manual/webhook/
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: "true"
+  creationTimestamp: null
+  name: webhook-secret
+  namespace: argocd
+spec:
+  encryptedData:
+    webhook.github.secret: AgCPTq9MesWNF4Vcp6zxPprcw5wYTKuM39YIjhTWVMZOuqvLKu4GSlcmBDH5L2QEi9/C+OYYfOz8l+dCx2/xXImc8Az9O9Ws1xzLFgSnV2hDOImIAY9xlxzxbNxqYKfFZHsAvgHuYcg6ecGiIQw11Oz88hNVyZFS1jVqBdgzNrAOxRarlzzf9d6z7y3I9SqitGKG55y/XB2w0+55gDS4HI91Gaqy2HkippJG9o9IfQWugH7YMIbID7zU6Eljms/lGGB2tZRWFejM6dg2dC1yWs2GQ/l0i67ttmf9nSoDlda66ektXmOoBWJ+2nxYhUCIf/9khxYm7y3GlLBytw+GN9WDNhcx8kbEqYOro/Mhs+ipMHzScl/sANPTnYMslNMCUDB21bGzbti4IN6SwGGMoCL0zueuWrnxolnPrvs9BaecPakCitfe/si9o+B8NL1Xtv7BxyTvzh+zzeA04pycgHvsGkgxxvJeGVqEmDIkMzAWXiLGBpyy2Xvq8i2XHWkBE2ah7BTt/Yh93WhxDAZmXmv8NiaWtNkcqtRmn9fom0ysaGvxSmZM28TGuV6FyBeDDc2TW0OzmMcfUBQu0TOuA0F4/EK5A7/TS6rC1hhxwkQGBjoIK0aIw0dvQ8MTu3pgYf4VW41r4SYrTg4otf7c3PSqVdZ4m/PeBRwWFZRZzVRBWXFbNTPkgkPwLfuH29LMffzashmmR75YZDtFofIZoTTXqxAjMXv92aGH98Q4xadHpfOMmAnESF3kvx45BoZopSY4hLC9fBsmUMMbU+UNstn3
+  template:
+    data: null
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
+      creationTimestamp: null
+      name: webhook-secret
+      namespace: argocd
+
+---
+# Bootstrap Application
+# Create ArgoCD bootstrap application (App of Apps)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bootstrap
+  namespace: argocd
+spec:
+  project: default
+  syncPolicy:
+    automated: {} # Keep all of the resources this project deploys in-sync automatically
+  source:
+    repoURL: git@github.com:Frontenac-Technology-Services/configurations.git
+    targetRevision: main # Use the main branch
+    path: apps # Deploy argo resources from the /argo path
+    # Deploy project and application type resources as raw kubernetes manifests from the source path recursively
+    directory:
+      recurse: true
+  # Deploy to the local ArgoCD Cluster in the argocd namespace
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+---
+# ArgoCD Github Credentials
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: "true"
+  creationTimestamp: null
+  name: fts-ssh-github-creds
+  namespace: argocd
+spec:
+  encryptedData:
+    sshPrivateKey: AgB2tWGE6WpLcCGMjrPVo+f4dyqTdEpYT4r7ioBkRbQkatnjW1Z+YqtL++vJKk+0TaCkHvxK/ZLbgfcpqr0QgGZtEKq8D4albN9bbGVLk2xXd5qu4d4Vpz1vuvyQS67znN9s82wINGnzkvhVWqAvwr2/kTEIiic/F/3kxcoG+/zR4Auqmg+CCyTVv44bh+lX9suD9H2RVCiziX0HTfFS1iAvI1ch2amfBxWx1kRLE/NG+efy7i8KPRSAJyVhZ/AMZgyEvoasGfaUlfUrpn2BusXm1rlSTQhX16fOW6g3emS7+Za2K5P/CQJxGxjLrC+uUFzqyD83oPTG3OcGOVXNlEv9VadCOsLRkpqzFJW4/SBbYWLvr8zHR/+CccNmjbCpri+wyxL9/3aJf2c598zCmthy9JYAeHE4SxEElQXYoPozy40i7o+mt8tng4JnBVfhqUk6nBlW2LU54Kg6Th40+rM/neHNfiaG+cR6WU8766Qq6YNQKrP+o4BvFRo+Mf3cKbP8BHVB5qkbHTE13+A6qlHjzIVwa7wvlfTJu2KRcG9ovPp2rN86j03YiXQN2tCTT6Kdx7WnMAcyRBZY0rSKAeonS+k5J59FiCflTSossrU0lVNldt2i7fah5i/pgovrAPinhkfVznydS7jpA4pf2OK8VPeMEib1o/cKgvk6jwtA4qalc71bpFWOALoGEbHaOR8Epp5i02JLsel68oj+fJvJEyN7Ll9m2H8XuhMyiS48tBV14hXd5WB9nIg7FXoroJpICB0MVK95f6tZ2ZQm7KNcyzfRGdmzxRP7aPho9JKe/u5KnnSWeZElY2O8ZOZFDuAAQknY/+fyukU4D2rEkzSPPZeufz2m1Nu7uWwLtGkU0WStdhrBXxGzo/czwzD9F49R8uSY0a/lWKvxHS2iGltv2egt+OuQHJ5ea68o3CCYXqm7nmg/VqawrCM7PHWGdenF2iO0uP25faoh2vJe+dsRqLS5whZWkJN7vPi2xejfDFHhMakem2aEKOoNmvmGxcjEKN/4FCU58yVKa9xIUpGwRBvO7z4vKbteg6eMT2HgWhOweNx/nOSsj3NFpHjpZAEJsIKgmRiKHeKzx82/CpeOgeHDH0ihM62scOl65XhOGwSZY5mjQ4ESnEY98CT+X7m9fj9FpxY4PA9oNVoZEhrPtlML0FStHJ61Y/NEo2FGy4pFZyoflSRd1oAWAXEzF3G5HLe1N7nchQz23RJ2QNQ=
+  template:
+    data: null
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
+      creationTimestamp: null
+      labels:
+        argocd.argoproj.io/secret-type: repo-creds
+      name: fts-ssh-github-creds
+      namespace: argocd
+    type: Opaque
