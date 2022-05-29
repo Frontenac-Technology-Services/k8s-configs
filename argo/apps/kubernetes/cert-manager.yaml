@@ -1,10 +1,8 @@
-# Create ArgoCD bootstrap application (App of Apps)
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: cert-manager
-  namespace: argocd
-  
+  namespace: argocd  
 spec:
   project: kubernetes
   source:
@@ -14,6 +12,27 @@ spec:
     # Deploy application using helm
     helm:
       releaseName: cert-manager
+  destination:
+    name: in-cluster
+    namespace: cert-manager
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager-configs
+  namespace: argocd  
+spec:
+  project: kubernetes
+  source:
+    repoURL: git@github.com:Frontenac-Technology-Services/configurations.git
+    targetRevision: master
+    path: configs/kubernetes/cert-manager/configs
+    directory:
+      recurse: true
   destination:
     name: in-cluster
     namespace: cert-manager
