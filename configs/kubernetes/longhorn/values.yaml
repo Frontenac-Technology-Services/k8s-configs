@@ -1,12 +1,11 @@
 longhorn:
   ingress:
     enabled: true
-
     host: longhorn.k8s.frontenac.tech
-
     tls: true
 
-    tlsSecret: longhorn.local-tls
+    ## If TLS is set to true, you must declare what secret will store the key/certificate for TLS
+    #tlsSecret: longhorn.local-tls
 
     path: /
 
@@ -14,16 +13,5 @@ longhorn:
       cert-manager.io/cluster-issuer: letsencrypt-prod
 
 
-    #secrets:
-    ## If you're providing your own certificates, please use this to add the certificates as secrets
-    ## key and certificate should start with -----BEGIN CERTIFICATE----- or
-    ## -----BEGIN RSA PRIVATE KEY-----
-    ##
-    ## name should line up with a tlsSecret set further up
-    ## If you're using kube-lego, this is unneeded, as it will create the secret for you if it is not set
-    ##
-    ## It is also possible to create and manage the certificates outside of this helm chart
-    ## Please see README.md for more information
-    # - name: longhorn.local-tls
-    #   key:
-    #   certificate:
+    secrets:
+    - name: longhorn.k8s.frontenac.tech
