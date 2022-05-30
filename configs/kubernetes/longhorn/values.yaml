@@ -4,30 +4,17 @@ longhorn:
 
     host: longhorn.k8s.frontenac.tech
 
-    ## Set this to true in order to enable TLS on the ingress record
-    ## A side effect of this will be that the backend service will be connected at port 443
-    tls: false
+    tls: true
 
-    ## If TLS is set to true, you must declare what secret will store the key/certificate for TLS
     tlsSecret: longhorn.local-tls
 
-    ## If ingress is enabled you can set the default ingress path
-    ## then you can access the UI by using the following full path {{host}}+{{path}}
     path: /
 
-    ## Ingress annotations done as key:value pairs
-    ## If you're using kube-lego, you will want to add:
-    ## kubernetes.io/tls-acme: true
-    ##
-    ## For a full list of possible ingress annotations, please see
-    ## ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/annotations.md
-    ##
-    ## If tls is set to true, annotation ingress.kubernetes.io/secure-backends: "true" will automatically be set
     annotations:
-    #  kubernetes.io/ingress.class: nginx
-    #  kubernetes.io/tls-acme: true
+      cert-manager.io/cluster-issuer: letsencrypt-prod
 
-    secrets:
+
+    #secrets:
     ## If you're providing your own certificates, please use this to add the certificates as secrets
     ## key and certificate should start with -----BEGIN CERTIFICATE----- or
     ## -----BEGIN RSA PRIVATE KEY-----
