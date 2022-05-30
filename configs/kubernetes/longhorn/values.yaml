@@ -14,4 +14,4 @@ longhorn:
 
 
     secrets:
-    - name: longhorn.k8s.frontenac.tech
+      - name: longhorn.k8s.frontenac.tech
