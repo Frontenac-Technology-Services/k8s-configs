@@ -3,15 +3,7 @@ longhorn:
     enabled: true
     host: longhorn.k8s.frontenac.tech
     tls: true
-
-    ## If TLS is set to true, you must declare what secret will store the key/certificate for TLS
-    #tlsSecret: longhorn.local-tls
-
+    tlsSecret: longhorn.k8s.frontenac.tech
     path: /
-
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
-
-
-    secrets:
-      - name: longhorn.k8s.frontenac.tech
