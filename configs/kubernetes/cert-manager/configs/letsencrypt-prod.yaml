@@ -16,8 +16,5 @@ spec:
             name: cloudflare-api-token-secret
             key: api-token
       selector:
-        dnsNames:
+        dnsZones:
         - 'frontenac.tech'
-        - '*.frontenac.tech'
-        - '*.k8s.frontenac.tech'
-        - '*.home.frontenac.tech'
