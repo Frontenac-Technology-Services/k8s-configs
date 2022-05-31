@@ -74,6 +74,7 @@ spec:
   externalTrafficPolicy: Local
   loadBalancerIP: 192.168.129.2
 ---
+# General ArgoCD Access
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -102,7 +103,36 @@ spec:
   - hosts:
     - argocd.k8s.frontenac.tech
     secretName: argocd-secret
-
+---
+# Github Webhook ArgoCD Access
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server-ingress
+  namespace: argocd
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"  # Fixes infinite 307 redirects
+    cert-manager.io/cluster-issuer: letsencrypt-prod # Generate a letsencrypt cert when cert-manager becomes available
+    nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16" # Forbid access from anything without a "X-Hub-Signature" header
+spec:
+  rules:
+  - host: argocd-webhook.k8s.frontenac.tech
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: argocd-server
+            port: 
+              name: https
+  tls:
+  - hosts:
+    - argocd-webhook.k8s.frontenac.tech
+    secretName: argocd-secret
 ---
 # ArgoCD Webhook Sealed Secret https://argo-cd.readthedocs.io/en/stable/operator-manual/webhook/
 apiVersion: bitnami.com/v1alpha1
