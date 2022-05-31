@@ -1,0 +1,23 @@
+# Create ArgoCD bootstrap application (App of Apps)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb
+  namespace: argocd
+  
+spec:
+  project: kubernetes
+  source:
+    repoURL: git@github.com:Frontenac-Technology-Services/configurations.git
+    targetRevision: master
+    path: configs/kubernetes/metallb
+    # Deploy application using helm
+    helm:
+      releaseName: metallb
+  destination:
+    name: in-cluster
+    namespace: metallb-system
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
