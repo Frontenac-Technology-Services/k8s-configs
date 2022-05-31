@@ -62,6 +62,7 @@ metadata:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"  # Fixes infinite 307 redirects
+    cert-manager.io/cluster-issuer: letsencrypt-prod # Generate a letsencrypt cert when cert-manager becomes available
 spec:
   rules:
   - host: argocd.k8s.frontenac.tech
