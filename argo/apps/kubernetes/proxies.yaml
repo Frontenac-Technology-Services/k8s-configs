@@ -1,0 +1,22 @@
+# Create ArgoCD bootstrap application (App of Apps)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: proxies
+  namespace: argocd
+  
+spec:
+  project: kubernetes
+  source:
+    repoURL: git@github.com:Frontenac-Technology-Services/configurations.git
+    targetRevision: master
+    path: configs/kubernetes/proxies
+    directory:
+      recurse: true
+  destination:
+    name: in-cluster
+    namespace: proxies
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
