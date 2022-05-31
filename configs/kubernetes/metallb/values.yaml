@@ -1,11 +1,7 @@
 metallb:
   configInline:
-    peers:
-    - peer-address: 192.168.129.1
-      peer-asn: 64501
-      my-asn: 64500
     address-pools:
     - name: default
-      protocol: bgp
+      protocol: layer2
       addresses:
-      - 192.168.130.0/24
+      - 192.168.129.2-192.168.129.98
