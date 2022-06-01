@@ -50,6 +50,11 @@ metadata:
     nginx.ingress.kubernetes.io/use-forwarded-header: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      proxy_set_header X-Forwarded-Host $server_name;      
     # nginx.ingress.kubernetes.io/server-snippet: |
     #   proxy_set_header   Host $host;
     #   proxy_set_header   X-Real-IP $remote_addr;
