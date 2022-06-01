@@ -18,8 +18,6 @@ spec:
             command:
             - /bin/sh
             - -c
-            - 'curl -X PUT "https://api.cloudflare.com/client/v4/zones/a0ecbc0d26aa26080cb2059c7940f77c/dns_records/4eed23ae32a4b6fce5e65ff77ca235ee" -H "X-Auth-Email: $CLOUDFLAIR_EMAIL" -H "X-Auth-Key: $CLOUDFLAIR_TOKEN" -H "Content-Type: application/json"'
-            - --data '{"type":"A","name":"frontenac.tech","content":"127.0.0.1","ttl":300,"proxied":true}' 
             - 'curl -X PUT "https://api.cloudflare.com/client/v4/zones/a0ecbc0d26aa26080cb2059c7940f77c/dns_records/4eed23ae32a4b6fce5e65ff77ca235ee" -H "Content-Type: application/json" -H "Authorization: Bearer $CLOUDFLARE_TOKEN"'
             - --data "{\"type\":\"A\",\"name\":\"frontenac.tech\",\"content\":\"127.0.0.1\",\"ttl\":300,\"proxied\":false}"
 
