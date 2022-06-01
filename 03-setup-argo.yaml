@@ -117,7 +117,7 @@ metadata:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"  # Fixes infinite 307 redirects
     cert-manager.io/cluster-issuer: letsencrypt-prod # Generate a letsencrypt cert when cert-manager becomes available
     nginx.ingress.kubernetes.io/server-snippet: | # Forbid access from anything without a "X-Hub-Signature" header
-      if ($http_X-Hub-Signature = "") { return 403; }
+      if ($http_x_hub_signature = "") { return 403; }
 spec:
   rules:
   - host: argocd-webhook.k8s.frontenac.tech
