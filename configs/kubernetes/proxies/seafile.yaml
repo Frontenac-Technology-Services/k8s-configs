@@ -5,7 +5,7 @@ metadata:
 spec:
   ports:
     - protocol: TCP
-      port: 80
+      port: 8000
       targetPort: 8000
 ---
 apiVersion: v1
@@ -25,7 +25,7 @@ metadata:
 spec:
   ports:
     - protocol: TCP
-      port: 80
+      port: 8082
       targetPort: 8082
 ---
 apiVersion: v1
@@ -48,16 +48,18 @@ metadata:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/use-forwarded-header: "true"
-    nginx.ingress.kubernetes.io/server-snippet: |
-      proxy_set_header   Host $host;
-      proxy_set_header   X-Real-IP $remote_addr;
-      proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_set_header   X-Forwarded-Host $server_name;
-      proxy_connect_timeout  36000s;
-      proxy_read_timeout  36000s;
-      proxy_send_timeout  36000s;
-      send_timeout  36000s;
-      client_max_body_size 0;
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+    # nginx.ingress.kubernetes.io/server-snippet: |
+    #   proxy_set_header   Host $host;
+    #   proxy_set_header   X-Real-IP $remote_addr;
+    #   proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+    #   proxy_set_header   X-Forwarded-Host $server_name;
+    #   proxy_connect_timeout  36000s;
+    #   proxy_read_timeout  36000s;
+    #   proxy_send_timeout  36000s;
+    #   send_timeout  36000s;
+    #   client_max_body_size 0;
 spec:
   rules:
   - host: seafile.home.frontenac.tech
@@ -69,14 +71,14 @@ spec:
           service:
             name: seafile
             port: 
-              number: 80
+              number: 8000
       - path: /seafhttp/
         pathType: Prefix
         backend:
           service:
             name: seafhttp
             port: 
-              number: 80
+              number: 8082
   tls:
   - hosts:
     - seafile.home.frontenac.tech
