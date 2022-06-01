@@ -13,4 +13,4 @@ kubernetes-dashboard:
       hosts:
       - k8s.frontenac.tech
   rbac:
-    clusterReadOnlyRule: true
+    clusterReadOnlyRole: true
