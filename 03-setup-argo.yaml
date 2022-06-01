@@ -108,7 +108,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: argocd-server-ingress
+  name: argocd-server-webhook-ingress
   namespace: argocd
   annotations:
     kubernetes.io/ingress.class: nginx
@@ -116,13 +116,14 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"  # Fixes infinite 307 redirects
     cert-manager.io/cluster-issuer: letsencrypt-prod # Generate a letsencrypt cert when cert-manager becomes available
-    nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16" # Forbid access from anything without a "X-Hub-Signature" header
+    nginx.ingress.kubernetes.io/server-snippet: | # Forbid access from anything without a "X-Hub-Signature" header
+      if ($http_X-Hub-Signature = "") { return 403; }
 spec:
   rules:
   - host: argocd-webhook.k8s.frontenac.tech
     http:
       paths:
-      - path: /
+      - path: /api/webhook
         pathType: Prefix
         backend:
           service:
@@ -132,7 +133,7 @@ spec:
   tls:
   - hosts:
     - argocd-webhook.k8s.frontenac.tech
-    secretName: argocd-secret
+    secretName: argocd-webhook-secret
 ---
 # ArgoCD Webhook Sealed Secret https://argo-cd.readthedocs.io/en/stable/operator-manual/webhook/
 apiVersion: bitnami.com/v1alpha1
@@ -145,7 +146,7 @@ metadata:
   namespace: argocd
 spec:
   encryptedData:
-    webhook.github.secret: AgCPTq9MesWNF4Vcp6zxPprcw5wYTKuM39YIjhTWVMZOuqvLKu4GSlcmBDH5L2QEi9/C+OYYfOz8l+dCx2/xXImc8Az9O9Ws1xzLFgSnV2hDOImIAY9xlxzxbNxqYKfFZHsAvgHuYcg6ecGiIQw11Oz88hNVyZFS1jVqBdgzNrAOxRarlzzf9d6z7y3I9SqitGKG55y/XB2w0+55gDS4HI91Gaqy2HkippJG9o9IfQWugH7YMIbID7zU6Eljms/lGGB2tZRWFejM6dg2dC1yWs2GQ/l0i67ttmf9nSoDlda66ektXmOoBWJ+2nxYhUCIf/9khxYm7y3GlLBytw+GN9WDNhcx8kbEqYOro/Mhs+ipMHzScl/sANPTnYMslNMCUDB21bGzbti4IN6SwGGMoCL0zueuWrnxolnPrvs9BaecPakCitfe/si9o+B8NL1Xtv7BxyTvzh+zzeA04pycgHvsGkgxxvJeGVqEmDIkMzAWXiLGBpyy2Xvq8i2XHWkBE2ah7BTt/Yh93WhxDAZmXmv8NiaWtNkcqtRmn9fom0ysaGvxSmZM28TGuV6FyBeDDc2TW0OzmMcfUBQu0TOuA0F4/EK5A7/TS6rC1hhxwkQGBjoIK0aIw0dvQ8MTu3pgYf4VW41r4SYrTg4otf7c3PSqVdZ4m/PeBRwWFZRZzVRBWXFbNTPkgkPwLfuH29LMffzashmmR75YZDtFofIZoTTXqxAjMXv92aGH98Q4xadHpfOMmAnESF3kvx45BoZopSY4hLC9fBsmUMMbU+UNstn3
+    webhook.github.secret: AgAtjIeKUD3OjFFsInqfVVta7E+xnfhq5CzCcFQkD+ELr4+8zP6OTexwL4xbCCkC5KKh7Yr3jSm72AqbFJuU52dF6copwnFTLpnP9RRC4KqA1h2AADbxSLN4yicNjeK6Qlub3Ymb+SI0YHAB1xIGQXBOVOphC4NFXGJiI2F1FKQIswe8XYsDgM1KLbxT6yGK2wRX79+FA8o9aHyfQldBZOEpfba7x79AaIetZMqYO6WN+jLs8dI90fGSgSvwrkEgVEunpGJuRKAtz6oNShhDshHAujoNaiMqX33/FMQHtt4JmMTlJLOKfHMI2Cw98dTI+iUbBkqgp4adbX0i66K5G0GnDPqVR1g4178R6Ksh14W6YqeD2MdV9RgUxJM48bisUIc7pqN6/EqzrP0YS207wLU1A4pIF2YGGkm28FJx0CLiAcFBLOMROcvMpp17cRm7vJbMvECefV40P2702rjOPTQ4Y5BxLK/14RhZuxFLQ1DoH5i108iO0TaP8hhR0bWugCGmoFQhfEhudtFJd8FaYMBhoJWrhJHuG/sVP4VGGzldOEYBp9XpzARYKgQajrcdVwud3mqBF7qQ8YM6t+O7yU/G0o00Wlqf4Pcb7sr8MfN8/luUg5lSZpXN71133fDCwj8MpYgYreREQNxwX7Qte7i3uagrIlsx9WZdrob8IVyFkgBZwPSEXmLoR8Mk8YdA08a7/JtLl3ox4UMOOYle4ZeIwUvRXbsZQs+0+ADZ5RH7OehYEwqajQtlWDykemTnJU3pLGjXHmnxJ7HNrYd5L03YJASOe2Q0N0L3ZB3fF8uLMGe3t8i52FWbULJcPl8M53JQyvLrv1Se+88cMeEmuTntqZ7tdLg6PA1k8GyEgL1lGg==
   template:
     data: null
     metadata:
