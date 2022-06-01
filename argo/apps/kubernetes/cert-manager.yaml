@@ -28,7 +28,7 @@ metadata:
 spec:
   project: kubernetes
   source:
-    repoURL: git@github.com:Frontenac-Technology-Services/configurations.git
+    repoURL: git@github.com:Frontenac-Technology-Services/k8s-configs.git
     targetRevision: master
     path: configs/kubernetes/cert-manager/configs
     directory:

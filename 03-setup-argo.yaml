@@ -124,7 +124,7 @@ spec:
     http:
       paths:
       - path: /api/webhook
-        pathType: Prefix
+        pathType: Exact
         backend:
           service:
             name: argocd-server
@@ -133,7 +133,7 @@ spec:
   tls:
   - hosts:
     - argocd-webhook.k8s.frontenac.tech
-    secretName: argocd-webhook-secret
+    secretName: argocd-secret
 ---
 # ArgoCD Webhook Sealed Secret https://argo-cd.readthedocs.io/en/stable/operator-manual/webhook/
 apiVersion: bitnami.com/v1alpha1
@@ -191,7 +191,7 @@ spec:
   syncPolicy:
     automated: {} # Keep all of the resources this project deploys in-sync automatically
   source:
-    repoURL: git@github.com:Frontenac-Technology-Services/configurations.git
+    repoURL: git@github.com:Frontenac-Technology-Services/k8s-configs.git
     targetRevision: master # Use the master branch
     path: argo # Deploy argo resources from the /argo path
     # Deploy project and application type resources as raw kubernetes manifests from the source path recursively
