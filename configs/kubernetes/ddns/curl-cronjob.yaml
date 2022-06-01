@@ -13,12 +13,11 @@ spec:
             image: curlimages/curl:7.83.1
             imagePullPolicy: IfNotPresent
             command:
-            - |
-              curl  -X PUT "https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0c353/dns_records/372e67954025e0ba6aaa6d586b9e0b59" \
-                    -H "X-Auth-Email: $CLOUDFLAIR_EMAIL" \
-                    -H "X-Auth-Key: $CLOUDFLAIR_TOKEN" \
-                    -H "Content-Type: application/json" \
-                    --data '{"type":"A","name":"frontenac.tech","content":"127.0.0.1","ttl":300,"proxied":true}' 
+            - curl  -X PUT "https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0c353/dns_records/372e67954025e0ba6aaa6d586b9e0b59"
+            - -H "X-Auth-Email: $CLOUDFLAIR_EMAIL" 
+            - -H "X-Auth-Key: $CLOUDFLAIR_TOKEN" 
+            - -H "Content-Type: application/json" 
+            - --data '{"type":"A","name":"frontenac.tech","content":"127.0.0.1","ttl":300,"proxied":true}' 
             - secretRef:
-              name: cloudflare-api-token-secret
+                name: cloudflare-api-token-secret
           restartPolicy: OnFailure
