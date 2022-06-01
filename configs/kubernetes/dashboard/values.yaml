@@ -12,3 +12,5 @@ kubernetes-dashboard:
     - secretName: k8s.frontenac.tech
       hosts:
       - k8s.frontenac.tech
+  rbac:
+    clusterReadOnlyRule: true
