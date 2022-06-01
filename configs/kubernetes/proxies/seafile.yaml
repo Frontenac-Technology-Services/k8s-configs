@@ -70,7 +70,7 @@ spec:
             name: seafile
             port: 
               number: 80
-      - path: /seafhttp(.*)$
+      - path: /seafhttp/
         pathType: Prefix
         backend:
           service:
