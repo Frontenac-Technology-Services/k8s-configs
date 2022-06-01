@@ -133,7 +133,7 @@ spec:
   tls:
   - hosts:
     - argocd-webhook.k8s.frontenac.tech
-    secretName: argocd-secret
+    secretName: argocd-webhook-secret
 ---
 # ArgoCD Webhook Sealed Secret https://argo-cd.readthedocs.io/en/stable/operator-manual/webhook/
 apiVersion: bitnami.com/v1alpha1
