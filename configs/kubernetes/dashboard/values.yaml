@@ -1,0 +1,14 @@
+kubernetes-dashboard:
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    hosts:
+      - k8s.frontenac.tech
+    tls:
+    - secretName: k8s.frontenac.tech
+      hosts:
+      - k8s.frontenac.tech
