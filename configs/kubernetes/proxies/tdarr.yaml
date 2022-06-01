@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tdarr
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8265
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: tdarr
+subsets:
+  - addresses:
+      - ip: 192.168.128.10
+    ports:
+      - port: 8265
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tdarr
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  rules:
+  - host: tdarr.home.frontenac.tech
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tdarr
+            port: 
+              number: 80
+  tls:
+  - hosts:
+    - tdarr.home.frontenac.tech
+    secretName: tdarr.home.frontenac.tech
