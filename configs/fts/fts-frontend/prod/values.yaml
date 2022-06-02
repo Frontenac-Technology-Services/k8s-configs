@@ -4,9 +4,6 @@ nginx:
   service:
     type: ClusterIP
 
-  podSecurityContext:
-    enabled: "true"
-
   extraVolumes:
   - name: ssh
     secret:
