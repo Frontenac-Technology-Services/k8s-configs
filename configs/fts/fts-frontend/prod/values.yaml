@@ -20,7 +20,7 @@ nginx:
     branch: main
     gitClone:
       command:
-        - ls -al /.ssh/id_ed25519
+        - ls -alR /
     extraVolumes:
     - name: ssh
     secret:
