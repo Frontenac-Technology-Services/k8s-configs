@@ -16,7 +16,7 @@ nginx:
     readOnly: true
   extraEnvVars:
   - name: GIT_SSH_COMMAND
-    value: "ssh -i /ssh/id_ed25519"
+    value: "ssh -o StrictHostKeyChecking=no -i /ssh/id_ed25519"
 
   
 
@@ -26,7 +26,7 @@ nginx:
     branch: main
     extraEnvVars:
     - name: GIT_SSH_COMMAND
-      value: "ssh -i /ssh/id_ed25519"
+      value: "ssh -o StrictHostKeyChecking=no -i /ssh/id_ed25519"
     extraVolumeMounts:
     - name: ssh
       mountPath: "/ssh"
