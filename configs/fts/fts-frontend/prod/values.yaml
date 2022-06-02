@@ -3,7 +3,6 @@ nginx:
 
   service:
     type: ClusterIP
-    ClusterIP: 1.1.1.1
 
   extraVolumes:
   - name: sshPrivateKey
