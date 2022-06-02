@@ -18,7 +18,7 @@ nginx:
     readOnly: true
   extraEnvVars:
   - name: GIT_SSH_COMMAND
-    value: "chown -R 1001:1001 /.ssh/id_ed25519 && ssh -i /.ssh/id_ed25519"
+    value: "chown 1001:1001 /.ssh/id_ed25519 && chmod 600 /.ssh/id_ed25519 && ssh -i /.ssh/id_ed25519"
 
   
 
