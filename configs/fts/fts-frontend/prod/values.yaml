@@ -14,7 +14,8 @@ nginx:
     mountPath: "/.ssh"
     readOnly: true
   extraEnvVars:
-  - GIT_SSH_COMMAND: "ssh -i /.ssh/id_ed25519"
+  - name: GIT_SSH_COMMAND
+    value: "ssh -i /.ssh/id_ed25519"
 
   
 
@@ -23,7 +24,8 @@ nginx:
     repository: git@github.com:Frontenac-Technology-Services/fts-frontend.git
     branch: main
     extraEnvVars:
-      - GIT_SSH_COMMAND: "ssh -i /.ssh/id_ed25519"
+    - name: GIT_SSH_COMMAND
+      value: "ssh -i /.ssh/id_ed25519"
     extraVolumeMounts:
     - name: ssh
       mountPath: "/.ssh"
