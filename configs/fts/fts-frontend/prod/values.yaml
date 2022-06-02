@@ -30,7 +30,6 @@ nginx:
       - name: www.frontenac.tech
     tls: true
     tlsSecret: frontenac.tech
-    extraTls: www.frontenac.tech
     pathType: Prefix
     path: /
     annotations:
