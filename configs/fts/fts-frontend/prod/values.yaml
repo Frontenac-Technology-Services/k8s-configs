@@ -5,12 +5,12 @@ nginx:
     type: ClusterIP
 
   extraVolumes:
-  - name: sshPrivateKey
+  - name: id_ed25519
     secret:
       secretName: sshPrivateKey
       optional: false
   extraVolumeMounts:
-  - name: sshPrivateKey
+  - name: id_ed25519
     mountPath: "/ssh"
     readOnly: true
 
