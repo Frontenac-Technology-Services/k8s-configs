@@ -15,6 +15,7 @@ nginx:
     enabled: "true"
     repository: git@github.com:Frontenac-Technology-Services/fts-frontend.git
     branch: develop
+    interval: 5
     extraEnvVars:
     - name: GIT_SSH_COMMAND
       value: "ssh -o StrictHostKeyChecking=no -i /ssh/id_ed25519"
