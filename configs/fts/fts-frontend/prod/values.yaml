@@ -24,7 +24,7 @@ nginx:
       readOnly: false
 
   ingress:
-    enabled: "true"
+    enabled: true
     hostname: frontenac.tech
     extraHosts:
       - www.frontenac.tech
