@@ -22,7 +22,7 @@ nginx:
       command:
         - ssh-add /.ssh/id_ed25519
     extraVolumeMounts:
-    - name: sshPrivateKey
+    - name: fts-ssh-github-creds
       mountPath: "/.ssh"
       readOnly: true
 
