@@ -10,15 +10,6 @@ nginx:
       secretName: fts-ssh-github-creds
       defaultMode: 0600
       optional: false
-  extraVolumeMounts:
-  - name: ssh
-    mountPath: "/ssh"
-    readOnly: true
-  extraEnvVars:
-  - name: GIT_SSH_COMMAND
-    value: "ssh -o StrictHostKeyChecking=no -i /ssh/id_ed25519"
-
-  
 
   cloneStaticSiteFromGit:
     enabled: "true"
