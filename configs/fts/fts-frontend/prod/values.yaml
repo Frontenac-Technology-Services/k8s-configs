@@ -10,6 +10,10 @@ nginx:
     secret:
       secretName: sshPrivateKey
       optional: false
+  extraVolumeMounts:
+  - name: sshPrivateKey
+    mountPath: "/ssh"
+    readOnly: true
 
   cloneHtdocsFromGit:
     enabled: "true"
