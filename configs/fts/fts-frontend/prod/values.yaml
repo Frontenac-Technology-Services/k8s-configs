@@ -29,7 +29,9 @@ nginx:
     extraHosts:
       - www.frontenac.tech
     tls: true
-    tlsSecret: longhorn.k8s.frontenac.tech
+    tlsSecret: frontenac.tech
+    extraTls: www.frontenac.tech
+    pathType: Prefix
     path: /
     annotations:
       kubernetes.io/ingress.class: nginx
