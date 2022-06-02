@@ -33,7 +33,9 @@ nginx:
     - name: www.frontenac.tech
       path: /
     extraTls:
-      - name: www.frontenac.tech
+      - hosts:
+        - www.frontenac.tech
+        secretName: www.frontenac.tech-tls
 
     pathType: Prefix
     path: /
