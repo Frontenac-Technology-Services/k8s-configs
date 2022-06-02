@@ -32,6 +32,8 @@ nginx:
     extraHosts:
     - name: www.frontenac.tech
       path: /
+    extraTls:
+      - name: www.frontenac.tech
 
     pathType: Prefix
     path: /
