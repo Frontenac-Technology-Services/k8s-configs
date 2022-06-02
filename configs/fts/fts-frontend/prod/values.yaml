@@ -11,7 +11,7 @@ fts-frontend:
       secretName: sshPrivateKey
       optional: false
 
-  cloneStaticSiteFromGit:
+  cloneHtdocsFromGit:
     enabled: "true"
     repository: git@github.com:Frontenac-Technology-Services/fts-frontend.git
     branch: main
