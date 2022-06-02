@@ -8,6 +8,7 @@ nginx:
   - name: ssh
     secret:
       secretName: fts-ssh-github-creds
+      defaultMode: 600
       optional: false
   extraVolumeMounts:
   - name: ssh
@@ -25,7 +26,7 @@ nginx:
     branch: main
     extraEnvVars:
     - name: GIT_SSH_COMMAND
-      value: "chown 1001:1001 /.ssh/id_ed25519 && chmod 600 /.ssh/id_ed25519 && ssh -i /.ssh/id_ed25519"
+      value: "ssh -i /.ssh/id_ed25519"
     extraVolumeMounts:
     - name: ssh
       mountPath: "/.ssh"
