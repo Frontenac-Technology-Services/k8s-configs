@@ -1,0 +1,41 @@
+fts-frontend:
+  replicaCount: 1
+
+  extraVolumes:
+  - name: sshPrivateKey
+    secret:
+      secretName: sshPrivateKey
+      optional: false
+
+  cloneStaticSiteFromGit:
+    enabled: "true"
+    repository: git@github.com:Frontenac-Technology-Services/fts-frontend.git
+    branch: main
+    gitClone:
+      command: ssh-add ~/.ssh/id_ed25519
+    extraVolumeMounts:
+    - name: sshPrivateKey
+      mountPath: "/ssh"
+      readOnly: true
+
+
+  extraDeploy:
+    apiVersion: bitnami.com/v1alpha1
+    kind: SealedSecret
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
+      creationTimestamp: null
+      name: fts-ssh-github-creds
+    spec:
+      encryptedData:
+        sshPrivateKey: AgB2tWGE6WpLcCGMjrPVo+f4dyqTdEpYT4r7ioBkRbQkatnjW1Z+YqtL++vJKk+0TaCkHvxK/ZLbgfcpqr0QgGZtEKq8D4albN9bbGVLk2xXd5qu4d4Vpz1vuvyQS67znN9s82wINGnzkvhVWqAvwr2/kTEIiic/F/3kxcoG+/zR4Auqmg+CCyTVv44bh+lX9suD9H2RVCiziX0HTfFS1iAvI1ch2amfBxWx1kRLE/NG+efy7i8KPRSAJyVhZ/AMZgyEvoasGfaUlfUrpn2BusXm1rlSTQhX16fOW6g3emS7+Za2K5P/CQJxGxjLrC+uUFzqyD83oPTG3OcGOVXNlEv9VadCOsLRkpqzFJW4/SBbYWLvr8zHR/+CccNmjbCpri+wyxL9/3aJf2c598zCmthy9JYAeHE4SxEElQXYoPozy40i7o+mt8tng4JnBVfhqUk6nBlW2LU54Kg6Th40+rM/neHNfiaG+cR6WU8766Qq6YNQKrP+o4BvFRo+Mf3cKbP8BHVB5qkbHTE13+A6qlHjzIVwa7wvlfTJu2KRcG9ovPp2rN86j03YiXQN2tCTT6Kdx7WnMAcyRBZY0rSKAeonS+k5J59FiCflTSossrU0lVNldt2i7fah5i/pgovrAPinhkfVznydS7jpA4pf2OK8VPeMEib1o/cKgvk6jwtA4qalc71bpFWOALoGEbHaOR8Epp5i02JLsel68oj+fJvJEyN7Ll9m2H8XuhMyiS48tBV14hXd5WB9nIg7FXoroJpICB0MVK95f6tZ2ZQm7KNcyzfRGdmzxRP7aPho9JKe/u5KnnSWeZElY2O8ZOZFDuAAQknY/+fyukU4D2rEkzSPPZeufz2m1Nu7uWwLtGkU0WStdhrBXxGzo/czwzD9F49R8uSY0a/lWKvxHS2iGltv2egt+OuQHJ5ea68o3CCYXqm7nmg/VqawrCM7PHWGdenF2iO0uP25faoh2vJe+dsRqLS5whZWkJN7vPi2xejfDFHhMakem2aEKOoNmvmGxcjEKN/4FCU58yVKa9xIUpGwRBvO7z4vKbteg6eMT2HgWhOweNx/nOSsj3NFpHjpZAEJsIKgmRiKHeKzx82/CpeOgeHDH0ihM62scOl65XhOGwSZY5mjQ4ESnEY98CT+X7m9fj9FpxY4PA9oNVoZEhrPtlML0FStHJ61Y/NEo2FGy4pFZyoflSRd1oAWAXEzF3G5HLe1N7nchQz23RJ2QNQ=
+      template:
+        data: null
+        metadata:
+          annotations:
+            sealedsecrets.bitnami.com/cluster-wide: "true"
+          creationTimestamp: null
+          labels:
+          name: fts-ssh-github-creds
+        type: Opaque
