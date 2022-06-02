@@ -20,7 +20,8 @@ nginx:
     branch: main
     gitClone:
       command:
-        - sleep 600 && ssh-add /.ssh/id_ed25519
+        - sleep 600
+        - ssh-add /.ssh/id_ed25519
     extraVolumes:
     - name: ssh
     secret:
