@@ -26,8 +26,6 @@ nginx:
   ingress:
     enabled: true
     hostname: frontenac.tech
-    extraHosts:
-      - name: www.frontenac.tech
     tls: true
     tlsSecret: frontenac.tech
     pathType: Prefix
