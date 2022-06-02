@@ -21,6 +21,11 @@ nginx:
     gitClone:
       command:
         - ssh-add /.ssh/id_ed25519
+    extraVolumes:
+    - name: ssh
+    secret:
+      secretName: fts-ssh-github-creds
+      optional: false
     extraVolumeMounts:
     - name: ssh
       mountPath: "/.ssh"
