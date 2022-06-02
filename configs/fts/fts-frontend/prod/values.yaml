@@ -5,13 +5,13 @@ nginx:
     type: ClusterIP
 
   extraVolumes:
-  - name: id_ed25519
+  - name: ssh
     secret:
       secretName: fts-ssh-github-creds
       optional: false
   extraVolumeMounts:
-  - name: .ssh
-    mountPath: "/"
+  - name: ssh
+    mountPath: "/.ssh"
     readOnly: true
 
   cloneHtdocsFromGit:
