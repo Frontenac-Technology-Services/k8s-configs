@@ -1,4 +1,4 @@
-fts-frontend:
+nginx:
   replicaCount: 1
 
   service:
