@@ -14,7 +14,7 @@ nginx:
     mountPath: "/.ssh"
     readOnly: true
 
-  cloneHtdocsFromGit:
+  cloneStaticSiteFromGit:
     enabled: "true"
     repository: git@github.com:Frontenac-Technology-Services/fts-frontend.git
     branch: main
