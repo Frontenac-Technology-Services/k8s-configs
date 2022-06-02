@@ -27,7 +27,7 @@ nginx:
     enabled: true
     hostname: frontenac.tech
     extraHosts:
-      - www.frontenac.tech
+      - name: www.frontenac.tech
     tls: true
     tlsSecret: frontenac.tech
     extraTls: www.frontenac.tech
