@@ -29,7 +29,7 @@ nginx:
     extraVolumeMounts:
     - name: ssh
       mountPath: "/.ssh"
-      readOnly: true
+      readOnly: false
 
 
   extraDeploy:
