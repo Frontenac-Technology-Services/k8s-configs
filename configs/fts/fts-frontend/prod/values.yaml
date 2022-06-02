@@ -30,7 +30,8 @@ nginx:
     tlsSecret: frontenac.tech
 
     extraHosts:
-      - www.frontenac.tech
+    - name: www.frontenac.tech
+      path: /
 
     pathType: Prefix
     path: /
