@@ -2,7 +2,7 @@ fts-frontend:
   replicaCount: 1
 
   service:
-    type: NodePort
+    type: ClusterIP
 
   extraVolumes:
   - name: sshPrivateKey
