@@ -1,6 +1,9 @@
 fts-frontend:
   replicaCount: 1
 
+  service:
+    type: ClusterIP
+
   extraVolumes:
   - name: sshPrivateKey
     secret:
