@@ -13,19 +13,17 @@ nginx:
   - name: ssh
     mountPath: "/.ssh"
     readOnly: true
+  extraEnvVars:
+  - GIT_SSH_COMMAND: "ssh -i /.ssh/id_ed25519"
+
+  
 
   cloneStaticSiteFromGit:
     enabled: "true"
     repository: git@github.com:Frontenac-Technology-Services/fts-frontend.git
     branch: main
-    gitClone:
-      command:
-        - ls -alR /
-    extraVolumes:
-    - name: ssh
-    secret:
-      secretName: fts-ssh-github-creds
-      optional: false
+    extraEnvVars:
+      - GIT_SSH_COMMAND: "ssh -i /.ssh/id_ed25519"
     extraVolumeMounts:
     - name: ssh
       mountPath: "/.ssh"
