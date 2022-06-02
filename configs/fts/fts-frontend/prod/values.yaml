@@ -23,6 +23,20 @@ nginx:
       mountPath: "/ssh"
       readOnly: false
 
+  ingress:
+    enabled: "true"
+    hostname: frontenac.tech
+    extraHosts:
+      - www.frontenac.tech
+    tls: true
+    tlsSecret: longhorn.k8s.frontenac.tech
+    path: /
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+
 
   extraDeploy:
   - apiVersion: bitnami.com/v1alpha1
