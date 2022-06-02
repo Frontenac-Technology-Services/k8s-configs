@@ -19,7 +19,8 @@ nginx:
     repository: git@github.com:Frontenac-Technology-Services/fts-frontend.git
     branch: main
     gitClone:
-      command: ssh-add /.ssh/id_ed25519
+      command:
+        - ssh-add /.ssh/id_ed25519
     # extraVolumeMounts:
     # - name: sshPrivateKey
     #   mountPath: "/ssh"
