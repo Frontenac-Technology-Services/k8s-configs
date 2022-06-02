@@ -20,10 +20,10 @@ nginx:
     branch: main
     gitClone:
       command: ssh-add ~/.ssh/id_ed25519
-    extraVolumeMounts:
-    - name: sshPrivateKey
-      mountPath: "/ssh"
-      readOnly: true
+    # extraVolumeMounts:
+    # - name: sshPrivateKey
+    #   mountPath: "/ssh"
+    #   readOnly: true
 
 
   extraDeploy:
