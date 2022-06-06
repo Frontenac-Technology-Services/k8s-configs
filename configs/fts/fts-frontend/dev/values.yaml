@@ -50,15 +50,15 @@ nginx:
     server {
       listen 0.0.0.0:8080;
       location / {
-        try_files $uri $uri/ @rm-ext;
+        try_files $uri $uri/ $uri.html;
       }
 
-      location ~ .html$ {
-        try_files $uri =404;
-      }
-
-      location @rm-ext {
-      rewrite ^(.*)$ $1.html last;
+      proxy_intercept_errors on;
+      error_page 404 = @errorpages;
+      
+      location @errorpages {
+        proxy_set_header X-Code $status;
+        proxy_pass /;
       }
     }
 
