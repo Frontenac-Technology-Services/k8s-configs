@@ -54,12 +54,8 @@ nginx:
       }
 
       proxy_intercept_errors on;
-      error_page 404 = @errorpages;
-      
-      location @errorpages {
-        proxy_set_header X-Code $status;
-        proxy_pass /;
-      }
+      error_page 404 /404.html;
+      error_page 500 502 503 504 /50x.html;
     }
 
 
