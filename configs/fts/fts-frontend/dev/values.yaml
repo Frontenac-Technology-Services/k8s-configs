@@ -50,7 +50,7 @@ nginx:
     server {
       listen 0.0.0.0:8080;
       location / {
-        try_files $uri $uri/ $uri.html $uri.php$is_args$query_string;
+        try_files $uri $uri/ $uri.html;
       }
     }
 
