@@ -50,11 +50,15 @@ nginx:
     server {
       listen 0.0.0.0:8080;
       location / {
-        try_files $uri $uri/ $uri.html;
+        try_files $uri $uri/ @rm-ext;
       }
 
       location ~ .html$ {
         try_files $uri =404;
+      }
+
+      location @rm-ext {
+      rewrite ^(.*)$ $1.html last;
       }
     }
 
