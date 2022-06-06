@@ -46,6 +46,14 @@ nginx:
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
 
+  serverBlock: |-
+    server {
+      listen 0.0.0.0:8080;
+      location / {
+        try_files $uri $uri/ $uri.html $uri.php$is_args$query_string;
+      }
+    }
+
 
   extraDeploy:
   - apiVersion: bitnami.com/v1alpha1
