@@ -1,0 +1,20 @@
+# Create ArgoCD bootstrap application (App of Apps)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: k8s-configs-private
+  namespace: argocd
+  
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:Frontenac-Technology-Services/k8s-configs-private.git
+    targetRevision: main
+    path: argo
+    directory:
+      recurse: true
+  destination:
+    name: in-cluster
+    namespace: argocd
+  syncPolicy:
+    automated: {}
