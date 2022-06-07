@@ -502,6 +502,7 @@ webhooks:
     service:
       name: cockroach-operator-webhook-service
       path: /mutate-crdb-cockroachlabs-com-v1alpha1-crdbcluster
+      namespace: cockroach-operator-system-dev
   failurePolicy: Fail
   name: mcrdbcluster.kb.io
   rules:
