@@ -1,4 +1,4 @@
-# Create ArgoCD bootstrap application (App of Apps)
+# Create ArgoCD bootstrap application for private configurations
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
