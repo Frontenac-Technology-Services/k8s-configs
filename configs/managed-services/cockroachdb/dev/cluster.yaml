@@ -29,8 +29,8 @@ spec:
     crdb: is-cool
   ingress:
     ui:
+      ingressClassName: nginx
       annotations:
-        kubernetes.io/ingress.class: nginx
         cert-manager.io/cluster-issuer: letsencrypt-dev
         nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16"
       host: cockroachdb-ui.k8s.frontenac.dev
@@ -39,8 +39,8 @@ spec:
         hosts:
         - cockroachdb-ui.k8s.frontenac.dev
     sql:
+      ingressClassName: nginx
       annotations:
-        kubernetes.io/ingress.class: nginx
         cert-manager.io/cluster-issuer: letsencrypt-dev
         nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16"
       host: cockroachdb-sql.k8s.frontenac.dev
