@@ -42,11 +42,5 @@ spec:
     sql:
       ingressClassName: nginx
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-dev
-        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
         nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16"
       host: cockroachdb-sql.k8s.frontenac.dev
-      tls:
-      - secretName: cockroachdb-sql.k8s.frontenac.dev
-        hosts:
-        - cockroachdb-sql.k8s.frontenac.dev
