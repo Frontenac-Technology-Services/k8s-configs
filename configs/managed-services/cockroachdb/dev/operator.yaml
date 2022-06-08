@@ -529,6 +529,7 @@ webhooks:
     service:
       name: cockroach-operator-webhook-service
       path: /validate-crdb-cockroachlabs-com-v1alpha1-crdbcluster
+      namespace: cockroach-operator-system-dev
   failurePolicy: Fail
   name: vcrdbcluster.kb.io
   rules:
