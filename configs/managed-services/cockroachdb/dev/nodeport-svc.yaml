@@ -15,4 +15,4 @@ spec:
     app.kubernetes.io/name: cockroachdb
   type: LoadBalancer
   externalTrafficPolicy: Local
-  loadBalancerIP: 192.168.129.2
+  loadBalancerIP: 192.168.129.3
