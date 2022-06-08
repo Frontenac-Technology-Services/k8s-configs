@@ -18,3 +18,4 @@ spec:
       selector:
         dnsZones:
         - 'frontenac.dev'
+        - 'k8s.frontenac.dev'
