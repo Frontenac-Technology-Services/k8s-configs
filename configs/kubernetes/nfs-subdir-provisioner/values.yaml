@@ -1,0 +1,8 @@
+nfs-subdir-external-provisioner:
+  nfs:
+    server: storage.frontenac.tech
+    path: /Media/Kubernetes
+  storageClass:
+    name: nfs
+    reclaimPolicy: Retain
+    accessModes: ReadWriteMany

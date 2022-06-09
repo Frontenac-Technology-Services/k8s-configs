@@ -1,0 +1,23 @@
+# Create ArgoCD bootstrap application (App of Apps)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nfs-subdir-provisioner
+  namespace: argocd
+  
+spec:
+  project: kubernetes
+  source:
+    repoURL: git@github.com:Frontenac-Technology-Services/k8s-configs.git
+    targetRevision: master
+    path: configs/kubernetes/nfs-subdir-provisioner
+    # Deploy application using helm
+    helm:
+      releaseName: nfs-subdir-provisioner
+  destination:
+    name: in-cluster
+    namespace: nfs-subdir-provisioner-system
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
