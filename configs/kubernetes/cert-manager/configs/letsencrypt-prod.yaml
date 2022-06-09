@@ -18,3 +18,4 @@ spec:
       selector:
         dnsZones:
         - 'frontenac.tech'
+        - 'k8s.frontenac.tech'

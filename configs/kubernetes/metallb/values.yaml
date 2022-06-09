@@ -4,4 +4,6 @@ metallb:
     - name: default
       protocol: layer2
       addresses:
-      - 192.168.129.2/32
+      - 192.168.129.2/32 # Ingress
+      - 192.168.129.3/32 # Cockroach Dev
+      - 192.168.129.4/32 # Cockroach Prod

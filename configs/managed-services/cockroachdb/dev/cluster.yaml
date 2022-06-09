@@ -1,0 +1,44 @@
+apiVersion: crdb.cockroachlabs.com/v1alpha1
+kind: CrdbCluster
+metadata:
+  name: cockroachdb
+spec:
+  sqlPort: 5432
+  dataStore:
+    pvc:
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: "60Gi"
+        volumeMode: Filesystem
+        storageClassName: longhorn
+  resources:
+    requests:
+      cpu: 500m
+      memory: 2Gi
+    limits:
+      cpu: "2"
+      memory: 8Gi
+  tlsEnabled: true
+  image:
+    name: cockroachdb/cockroach:v21.2.8
+  nodes: 3
+  ingress:
+    ui:
+      ingressClassName: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-dev
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16"
+      host: cockroachdb-ui.k8s.frontenac.dev
+      tls:
+      - secretName: cockroachdb-ui.k8s.frontenac.dev
+        hosts:
+        - cockroachdb-ui.k8s.frontenac.dev
+    sql:
+      ingressClassName: nginx
+      annotations:
+        nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16"
+      host: cockroachdb-sql.k8s.frontenac.dev
