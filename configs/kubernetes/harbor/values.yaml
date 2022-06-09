@@ -1,0 +1,41 @@
+harbor:
+  expose:
+    type: ingress
+    tls:
+      enabled: true
+      certSource: secret
+      secret:
+        secretName: harbor.k8s.frontenac.tech
+        notarySecretName: "notary.harbour.k8s.frontenac.tech"
+    ingress:
+      hosts:
+        core: harbor.k8s.frontenac.tech
+        notary: notary.harbour.k8s.frontenac.tech
+      className: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+  externalURL: https://harbor.k8s.frontenac.tech
+  persistence:
+    enabled: true
+    resourcePolicy: "keep"
+    registry:
+      storageClass: longhorn
+      size: 50Gi
+    chartmuseum:
+      storageClass: longhorn
+      size: 5Gi
+    jobservice:
+      storageClass: longhorn
+      size: 1Gi
+    database:
+      storageClass: longhorn
+      size: 1Gi
+    redis:
+      storageClass: longhorn
+      size: 1Gi
+    trivy:
+      storageClass: longhorn
+      size: 5Gi
