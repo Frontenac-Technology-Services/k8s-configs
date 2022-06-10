@@ -28,7 +28,6 @@ metadata:
   namespace: argocd
 data:
   exec.enabled: "true"
-  exec.shell: bash
   resource.customizations.health.bitnami.com_SealedSecret: |
     hs = {}
     hs.status = "Healthy"
@@ -53,6 +52,9 @@ metadata:
   namespace: argocd
 data:
   policy.default: role:admin
+  policy.csv:
+    p, role:admin, exec, get, *, allow
+    p, role:admin, exec, create, *, allow
 ---
 # Create MetalLB Service
 apiVersion: v1
@@ -67,9 +69,11 @@ spec:
   - name: http
     port: 80
     targetPort: 80
+    protocol: TCP
   - name: https
     port: 443
     targetPort: 443
+    protocol: TCP
   selector:
     app: ingress-nginx
   type: LoadBalancer
@@ -84,11 +88,25 @@ metadata:
   namespace: argocd
   annotations:
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"  # Fixes infinite 307 redirects
     cert-manager.io/cluster-issuer: letsencrypt-prod # Generate a letsencrypt cert when cert-manager becomes available
     nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16" # Forbid access from external networks
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/websocket-services: "argocd-server"
+    nginx.ingress.kubernetes.io/server-snippets: |
+      location /terminal {
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_http_version 1.1;
+      proxy_set_header X-Forwarded-Host $http_host;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      proxy_set_header Host $host;
+      proxy_set_header Connection "upgrade";
+      proxy_cache_bypass $http_upgrade;
+      }
 spec:
   rules:
   - host: argocd.k8s.frontenac.tech
