@@ -27,6 +27,8 @@ metadata:
   name: argocd-cm
   namespace: argocd
 data:
+  exec.enabled: "true"
+  exec.shell: bash
   resource.customizations.health.bitnami.com_SealedSecret: |
     hs = {}
     hs.status = "Healthy"
