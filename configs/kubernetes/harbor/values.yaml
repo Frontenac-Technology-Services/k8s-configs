@@ -6,11 +6,9 @@ harbor:
       certSource: secret
       secret:
         secretName: harbor.k8s.frontenac.tech
-        notarySecretName: "notary.harbor.k8s.frontenac.tech"
     ingress:
       hosts:
         core: harbor.k8s.frontenac.tech
-        notary: notary.harbor.k8s.frontenac.tech
       className: nginx
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -36,6 +34,7 @@ harbor:
     redis:
       storageClass: longhorn
       size: 1Gi
-    trivy:
-      storageClass: longhorn
-      size: 5Gi
+  trivy:
+    enabled: false
+  notary:
+    enabled: false
