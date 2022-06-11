@@ -16,5 +16,3 @@ spec:
   destination:
     name: in-cluster
     namespace: argocd
-  syncPolicy:
-    automated: {}
