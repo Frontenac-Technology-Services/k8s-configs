@@ -2,7 +2,7 @@ seafile:
 
   env:
     SEAFILE_ADMIN_EMAIL: admin@frontenac.tech
-    SEAFILE_SERVER_HOSTNAME: seafile.k8s.frontenac.tech
+    SEAFILE_SERVER_HOSTNAME: seafile.frontenac.tech
     SEAFILE_ADMIN_PASSWORD:
       valueFrom:
        secretKeyRef:
@@ -24,14 +24,14 @@ seafile:
         nginx.ingress.kubernetes.io/ssl-redirect: "true"
         nginx.ingress.kubernetes.io/proxy-body-size: 1024m
       hosts:
-        - host: seafile.k8s.frontenac.tech
+        - host: seafile.frontenac.tech
           paths:
           - path: /
             pathType: Prefix
       tls:
-      - secretName: seafile.k8s.frontenac.tech
+      - secretName: seafile.frontenac.tech
         hosts:
-        - seafile.k8s.frontenac.tech
+        - seafile.frontenac.tech
 
   persistence:
     shared:
