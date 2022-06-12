@@ -7,9 +7,9 @@ metadata:
 spec:
   project: fts
   source:
-    repoURL: git@github.com:Frontenac-Technology-Services/k8s-configs-private.git
-    targetRevision: main
-    path: configs/homelab/seafile
+    repoURL: git@github.com:Frontenac-Technology-Services/k8s-configs.git
+    targetRevision: master
+    path: configs/fts/seafile
     # Deploy application using helm
     helm:
       releaseName: seafile
@@ -29,9 +29,9 @@ metadata:
 spec:
   project: fts
   source:
-    repoURL: git@github.com:Frontenac-Technology-Services/k8s-configs-private.git
-    targetRevision: main
-    path: configs/homelab/seafile/secrets
+    repoURL: git@github.com:Frontenac-Technology-Services/k8s-configs.git
+    targetRevision: master
+    path: configs/fts/seafile/secrets
     directory:
       recurse: true
   destination:
