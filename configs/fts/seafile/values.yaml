@@ -1,0 +1,55 @@
+seafile:
+
+  env:
+    SEAFILE_ADMIN_EMAIL: admin@frontenac.tech
+    SEAFILE_SERVER_HOSTNAME: seafile.k8s.frontenac.tech
+    SEAFILE_ADMIN_PASSWORD:
+      valueFrom:
+       secretKeyRef:
+         name: seafile-sealed-secret
+         key: SEAFILE_ADMIN_PASSWORD
+    DB_ROOT_PASSWD:
+      valueFrom:
+       secretKeyRef:
+         name: seafile-sealed-secret
+         key: DB_ROOT_PASSWD
+
+  ingress:
+    main:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+      hosts:
+        - host: seafile.k8s.frontenac.tech
+          paths:
+          - path: /
+            pathType: Prefix
+      tls:
+      - secretName: seafile.k8s.frontenac.tech
+        hosts:
+        - seafile.k8s.frontenac.tech
+
+  persistence:
+    shared:
+      enabled: true
+      type: pvc
+      storageClass: nfs
+      accessMode: ReadWriteMany
+      size: 8Ti
+
+  mariadb:
+    enabled: true
+    architecture: standalone
+    auth:
+      database: seafile
+      username: seafile
+      existingSecret: seafile-sealed-secret
+    primary:
+      persistence:
+        enabled: true
+        storageClass: longhorn
+        size: 25Gi
