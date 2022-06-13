@@ -87,4 +87,4 @@ error-pages:
   env:
     TZ: America/Toronto
     SHOW_DETAILS: "true"
-    TEMPLATE_NAME: 17-dark
+    TEMPLATE_NAME: l7-dark
