@@ -1,0 +1,460 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.7.0
+  creationTimestamp: null
+  name: accounts.cf.containeroo.ch
+spec:
+  group: cf.containeroo.ch
+  names:
+    kind: Account
+    listKind: AccountList
+    plural: accounts
+    singular: account
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.email
+      name: Email
+      type: string
+    - jsonPath: .status.phase
+      name: Phase
+      type: string
+    name: v1beta1
+    schema:
+      openAPIV3Schema:
+        description: Account is the Schema for the accounts API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: AccountSpec defines the desired state of Account
+            properties:
+              email:
+                description: Email of the Cloudflare account
+                type: string
+              globalAPIKey:
+                description: Global API key of the Cloudflare account
+                properties:
+                  secretRef:
+                    description: Secret name containing the API key (key must be named
+                      "apiKey")
+                    properties:
+                      name:
+                        description: Name is unique within a namespace to reference
+                          a secret resource.
+                        type: string
+                      namespace:
+                        description: Namespace defines the space within which the
+                          secret name must be unique.
+                        type: string
+                    type: object
+                required:
+                - secretRef
+                type: object
+              interval:
+                default: 5m
+                description: Interval to check account status
+                type: string
+              managedZones:
+                description: List of zone names that should be managed by cloudflare-operator
+                items:
+                  type: string
+                type: array
+            required:
+            - email
+            - globalAPIKey
+            type: object
+          status:
+            description: AccountStatus defines the observed state of Account
+            properties:
+              message:
+                description: Message if the Account authentication failed
+                type: string
+              phase:
+                description: Phase of the Account
+                enum:
+                - Active
+                - Failed
+                type: string
+              zones:
+                description: Zones contains all the zones of the Account
+                items:
+                  properties:
+                    id:
+                      description: ID of the zone
+                      type: string
+                    name:
+                      description: Name of the zone
+                      type: string
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.7.0
+  creationTimestamp: null
+  name: dnsrecords.cf.containeroo.ch
+spec:
+  group: cf.containeroo.ch
+  names:
+    kind: DNSRecord
+    listKind: DNSRecordList
+    plural: dnsrecords
+    singular: dnsrecord
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.name
+      name: Record Name
+      type: string
+    - jsonPath: .spec.type
+      name: Type
+      type: string
+    - jsonPath: .spec.content
+      name: Content
+      type: string
+    - jsonPath: .spec.proxied
+      name: Proxied
+      type: boolean
+    - jsonPath: .spec.ttl
+      name: TTL
+      type: integer
+    - jsonPath: .status.phase
+      name: Status
+      type: string
+    name: v1beta1
+    schema:
+      openAPIV3Schema:
+        description: DNSRecord is the Schema for the dnsrecords API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: DNSRecordSpec defines the desired state of DNSRecord
+            properties:
+              content:
+                description: Content of the DNS record (e.g. 144.231.20.1)
+                type: string
+              interval:
+                default: 5m
+                description: Interval to check DNSRecord
+                type: string
+              ipRef:
+                description: Reference to an IP object
+                properties:
+                  name:
+                    description: Name of the IP object
+                    type: string
+                type: object
+              name:
+                description: Name of the DNS record (e.g. app.example.com)
+                type: string
+              proxied:
+                default: true
+                description: Proxied indicates whether the DNS record should be proxied
+                type: boolean
+              ttl:
+                default: 1
+                description: TTL of the DNS record (e.g. 300, 1 for automatic)
+                maximum: 86400
+                minimum: 1
+                type: integer
+              type:
+                default: A
+                description: Type of DNS record (A, CNAME)
+                enum:
+                - A
+                - CNAME
+                type: string
+            required:
+            - name
+            type: object
+          status:
+            description: DNSRecordStatus defines the observed state of DNSRecord
+            properties:
+              message:
+                description: Message if the DNS record failed
+                type: string
+              phase:
+                description: Phase of the DNS record
+                enum:
+                - Created
+                - Pending
+                - Failed
+                type: string
+              recordID:
+                description: Cloudflare DNS record ID
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.7.0
+  creationTimestamp: null
+  name: ips.cf.containeroo.ch
+spec:
+  group: cf.containeroo.ch
+  names:
+    kind: IP
+    listKind: IPList
+    plural: ips
+    singular: ip
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.address
+      name: Address
+      type: string
+    - jsonPath: .spec.type
+      name: Type
+      type: string
+    - jsonPath: .status.phase
+      name: Phase
+      type: string
+    name: v1beta1
+    schema:
+      openAPIV3Schema:
+        description: IP is the Schema for the ips API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: IPSpec defines the desired state of IP
+            properties:
+              address:
+                description: IP address (omit if type is dynamic)
+                type: string
+              interval:
+                description: Interval at which a dynamic IP should be checked
+                type: string
+              ipSources:
+                description: IPSources can be configured to get an IP from an external
+                  source (e.g. an API or public IP echo service)
+                items:
+                  properties:
+                    requestBody:
+                      description: RequestBody to be sent to the URL
+                      type: string
+                    requestHeaders:
+                      additionalProperties:
+                        type: string
+                      description: RequestHeaders to be sent to the URL
+                      type: object
+                    requestHeadersSecretRef:
+                      description: RequestHeadersSecretRef is a secret reference to
+                        the headers to be sent to the URL (e.g. for authentication)
+                        where the key is the header name and the value is the header
+                        value
+                      properties:
+                        name:
+                          description: Name is unique within a namespace to reference
+                            a secret resource.
+                          type: string
+                        namespace:
+                          description: Namespace defines the space within which the
+                            secret name must be unique.
+                          type: string
+                      type: object
+                    requestMethod:
+                      default: GET
+                      description: RequestMethod defines the HTTP method to be used
+                      enum:
+                      - GET
+                      - POST
+                      - PUT
+                      - DELETE
+                      type: string
+                    responseJSONPath:
+                      description: ResponseJSONPath defines the JSON path to the value
+                        to be used as IP
+                      type: string
+                    responseRegex:
+                      description: ResponseRegex defines the regular expression to
+                        be used to extract the IP from the response
+                      type: string
+                    url:
+                      description: URL of the IP source (e.g. https://api.hetzner.cloud/v1/servers/12345)
+                      type: string
+                  type: object
+                type: array
+              type:
+                default: static
+                description: IP address type (static or dynamic)
+                enum:
+                - static
+                - dynamic
+                type: string
+            type: object
+          status:
+            description: IPStatus defines the observed state of IP
+            properties:
+              lastObservedIP:
+                description: LastObservedIP contains the IP address observed at the
+                  last interval (used to determine whether the IP has changed)
+                type: string
+              message:
+                description: Message if the IP failed to update
+                type: string
+              phase:
+                description: Phase of the IP
+                enum:
+                - Ready
+                - Failed
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.7.0
+  creationTimestamp: null
+  name: zones.cf.containeroo.ch
+spec:
+  group: cf.containeroo.ch
+  names:
+    kind: Zone
+    listKind: ZoneList
+    plural: zones
+    singular: zone
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.name
+      name: Zone Name
+      type: string
+    - jsonPath: .spec.id
+      name: ID
+      type: string
+    - jsonPath: .status.phase
+      name: Phase
+      type: string
+    name: v1beta1
+    schema:
+      openAPIV3Schema:
+        description: Zone is the Schema for the zones API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ZoneSpec defines the desired state of Zone
+            properties:
+              id:
+                description: ID of the zone
+                type: string
+              interval:
+                default: 5m
+                description: Interval to check zone status
+                type: string
+              name:
+                description: Name of the zone
+                type: string
+            required:
+            - id
+            - name
+            type: object
+          status:
+            description: ZoneStatus defines the observed state of Zone
+            properties:
+              message:
+                description: Message if the Zone failed
+                type: string
+              phase:
+                description: Phase of the Zone
+                enum:
+                - Active
+                - Pending
+                - Failed
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
