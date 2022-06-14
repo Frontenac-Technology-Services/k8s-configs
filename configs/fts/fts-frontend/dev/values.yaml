@@ -46,7 +46,7 @@ nginx:
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
       nginx.ingress.kubernetes.io/default-backend: fts-frontend-error-pages
-      custom-http-errors: "4xx,5xx"
+      custom-http-errors: "404"
 
   serverBlock: |-
     server {
