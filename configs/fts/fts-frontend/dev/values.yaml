@@ -89,4 +89,4 @@ error-pages:
   env:
     TZ: America/Toronto
     SHOW_DETAILS: "false"
-    TEMPLATE_NAME: l7-dark
+    TEMPLATE_NAME: connection
