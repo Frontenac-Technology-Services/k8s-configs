@@ -44,6 +44,8 @@ nginx:
       cert-manager.io/cluster-issuer: letsencrypt-prod
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/default-backend: fts-frontend-error-pages
+      nginx.ingress.kubernetes.io/custom-http-errors: "401,403,404,500,501,502,503"
     
   serverBlock: |-
     server {
@@ -81,3 +83,10 @@ nginx:
           labels:
           name: fts-ssh-github-creds
         type: Opaque
+error-pages:
+  env:
+    TZ: America/Toronto
+    SHOW_DETAILS: "false"
+    TEMPLATE_NAME: connection
+  image:
+    tag: 2.16.0
