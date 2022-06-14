@@ -88,5 +88,5 @@ nginx:
 error-pages:
   env:
     TZ: America/Toronto
-    SHOW_DETAILS: "true"
+    SHOW_DETAILS: "false"
     TEMPLATE_NAME: l7-dark
