@@ -10,4 +10,4 @@
 #     name: dynamic-external-ipv4-address
 #   proxied: true
 #   ttl: 1
-#   interval: 2m
+#   interval: 2m0s
