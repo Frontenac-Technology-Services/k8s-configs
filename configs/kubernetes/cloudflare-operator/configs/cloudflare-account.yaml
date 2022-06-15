@@ -1,0 +1,10 @@
+apiVersion: cf.containeroo.ch/v1beta1
+kind: Account
+metadata:
+  name: cloudflare-account
+spec:
+  email: admin@frontenac.tech
+  globalAPIKey:
+    secretRef:
+      name: cloudflare-global-api-key
+      namespace: cloudflare-operator
