@@ -5,11 +5,11 @@ metadata:
   namespace: argocd
   
 spec:
-  project: fts
+  project: managed-services
   source:
     repoURL: git@github.com:Frontenac-Technology-Services/k8s-configs.git
     targetRevision: master
-    path: configs/fts/seafile
+    path: configs/managed-services/seafile
     # Deploy application using helm
     helm:
       releaseName: seafile
@@ -27,11 +27,11 @@ metadata:
   name: seafile-secrets
   namespace: argocd  
 spec:
-  project: fts
+  project: managed-services
   source:
     repoURL: git@github.com:Frontenac-Technology-Services/k8s-configs.git
     targetRevision: master
-    path: configs/fts/seafile/secrets
+    path: configs/managed-services/seafile/secrets
     directory:
       recurse: true
   destination:
