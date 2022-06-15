@@ -1,10 +1,10 @@
 apiVersion: cf.containeroo.ch/v1beta1
 kind: DNSRecord
 metadata:
-  name: home-frontenac-tech
+  name: unproxied-frontenac-tech
   namespace: cloudflare-operator
 spec:
-  name: home.frontenac.tech
+  name: unproxied.frontenac.tech
   type: A
   ipRef:
     name: dynamic-external-ipv4-address
