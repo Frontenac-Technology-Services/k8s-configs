@@ -4,10 +4,20 @@ metadata:
   name: dynamic-external-ipv4-address
 spec:
   type: dynamic
-  interval: 120s
+  interval: 2m0s
   ipSources:
-    - url: https://ifconfig.me/ip
-    - url: https://ipecho.net/plain
-    - url: https://myip.is/ip/
-    - url: https://checkip.amazonaws.com
-    - url: https://api.ipify.org
+    - requestHeadersSecretRef: {}
+      requestMethod: GET
+      url: 'https://ipecho.net/plain'
+    - requestHeadersSecretRef: {}
+      requestMethod: GET
+      url: 'https://ifconfig.me/ip'
+    - requestHeadersSecretRef: {}
+      requestMethod: GET
+      url: 'https://checkip.amazonaws.com'
+    - requestHeadersSecretRef: {}
+      requestMethod: GET
+      url: 'https://api.ipify.org'
+    - requestHeadersSecretRef: {}
+      requestMethod: GET
+      url: 'https://myip.is/ip/'
