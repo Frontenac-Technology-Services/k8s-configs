@@ -47,7 +47,7 @@ nginx:
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
       nginx.ingress.kubernetes.io/default-backend: fts-frontend-error-pages
       nginx.ingress.kubernetes.io/custom-http-errors: "401,403,404,500,501,502,503"
-      cf.containeroo.ch/content: frontenac.dev
+      cf.containeroo.ch/content: www.frontenac.dev
 
   serverBlock: |-
     server {
