@@ -17,6 +17,7 @@ harbor:
         nginx.ingress.kubernetes.io/proxy-body-size: "0"
         cf.containeroo.ch/content: k8s.frontenac.tech
         cf.containeroo.ch/type: CNAME
+        cf.containeroo.ch/proxied: false
   externalURL: https://harbor.k8s.frontenac.tech
   persistence:
     enabled: true
