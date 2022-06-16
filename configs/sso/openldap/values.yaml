@@ -1,0 +1,41 @@
+openldap:
+  global:
+    ldapDomain: frontenac.tech
+    storageClass: longhorn
+
+  image:
+    pullPolicy: IfNotPresent
+
+  existingSecret: ldap-auth-secret
+
+  customTLS:
+    enabled: false
+
+  service:
+    ldapPort: 389
+    sslLdapPort: 636
+
+  env:
+    LDAP_ORGANISATION: "Fronenac Technology Services"
+  
+  persistence:
+    enabled: true
+    storageClass: longhorn
+    accessModes:
+      - ReadWriteOnce
+    size: 20Gi
+
+  phpldapadmin:
+    enabled: true
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      path: /
+      pathType: Prefix
+      hosts:
+      - ldap.k8s.frontenac.tech
