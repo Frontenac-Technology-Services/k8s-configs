@@ -23,7 +23,7 @@ keycloak:
           - path: /
             pathType: Prefix
     tls:
-    - hosts:1
+    - hosts:
       - sso.frontenac.tech
       secretName: sso.frontenac.tech
 
