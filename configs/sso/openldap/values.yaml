@@ -46,6 +46,10 @@ openldap:
       pathType: Prefix
       hosts:
       - ldap.k8s.frontenac.tech
+      tls:
+      - secretName: seafile.frontenac.tech
+        hosts:
+        - seafile.frontenac.tech
 
   ltb-passwd:
     enabled : false
