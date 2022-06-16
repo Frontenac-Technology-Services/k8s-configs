@@ -4,7 +4,9 @@ keycloak:
       value: DEBUG
     - name: PROXY_ADDRESS_FORWARDING
       value: "true"
-  extraEnvFrom: keycloak-auth-secret
+  extraEnvFrom:
+    secretRef:
+      name: keycloak-auth-secret
 
   ingress:
     enabled: true
