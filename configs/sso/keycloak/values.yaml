@@ -35,5 +35,6 @@ keycloak:
     architecture: standalone
     auth:
       existingSecret: postgres-secret
-    storageClass: longhorn
-    size: 20Gi
+    persistence:
+      storageClass: longhorn
+      size: 20Gi
