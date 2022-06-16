@@ -23,7 +23,7 @@ keycloak:
           - path: /
             pathType: Prefix
     tls:
-    - hosts:
+    - hosts:1
       - sso.frontenac.tech
       secretName: sso.frontenac.tech
 
@@ -35,3 +35,5 @@ keycloak:
     architecture: standalone
     auth:
       existingSecret: postgres-secret
+    storageClass: longhorn
+    size: 20Gi
