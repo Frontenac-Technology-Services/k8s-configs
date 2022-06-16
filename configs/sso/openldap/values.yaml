@@ -3,6 +3,8 @@ openldap:
     ldapDomain: frontenac.tech
     storageClass: longhorn
 
+  clusterDomain: k8s.frontenac.tech
+
   image:
     pullPolicy: IfNotPresent
 
@@ -17,7 +19,6 @@ openldap:
 
   env:
     LDAP_ORGANISATION: "Fronenac Technology Services"
-
 
   replication:
     enabled: true
