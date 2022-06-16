@@ -8,6 +8,8 @@ keycloak:
     secretRef:
       name: keycloak-auth-secret
 
+  clusterDomain: k8s.frontenac.tech
+
   ingress:
     enabled: true
     annotations:
