@@ -1,0 +1,33 @@
+keycloak:
+  extraEnv: |
+    - name: KEYCLOAK_LOGLEVEL
+      value: DEBUG
+    - name: PROXY_ADDRESS_FORWARDING
+      value: "true"
+  extraEnvFrom:
+    - keycloak-auth-secret
+
+  ingress:
+    enabled: true
+    annotations:
+        kubernetes.io/ingress.class: nginx
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    rules:
+      - host: sso.frontenac.tech
+        paths:
+          - /
+    tls:
+    - hosts:
+      - sso.frontenac.tech
+      secretName: sso.frontenac.tech
+
+  args:
+    - -Dkeycloak.profile.feature.docker=enabled
+
+  postgresql:
+    enabled: true
+    architecture: standalone
+    auth:
+      existingSecret: postgres-secret

@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: keycloak
+  namespace: argocd
+  
+spec:
+  project: sso
+  source:
+    repoURL: git@github.com:Frontenac-Technology-Services/k8s-configs.git
+    targetRevision: master
+    path: configs/sso/keycloak
+    # Deploy application using helm
+    helm:
+      releaseName: keycloak
+  destination:
+    name: in-cluster
+    namespace: keycloak
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: keycloak-configs
+  namespace: argocd
+  
+spec:
+  project: sso
+  source:
+    repoURL: git@github.com:Frontenac-Technology-Services/k8s-configs.git
+    targetRevision: master
+    path: configs/sso/keycloak/configs
+    directory:
+      recurse: true
+  destination:
+    name: in-cluster
+    namespace: keycloak
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
