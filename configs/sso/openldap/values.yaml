@@ -1,4 +1,6 @@
 openldap:
+  replicaCount: 1
+
   global:
     ldapDomain: frontenac.tech
     storageClass: longhorn
@@ -22,8 +24,7 @@ openldap:
     LDAP_TLS: "false"
 
   replication:
-    enabled: true
-    clusterName: "k8s.frontenac.tech"
+    enabled: false
   
   persistence:
     enabled: true
