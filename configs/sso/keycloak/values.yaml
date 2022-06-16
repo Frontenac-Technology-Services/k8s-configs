@@ -17,6 +17,7 @@ keycloak:
         cert-manager.io/cluster-issuer: letsencrypt-prod
         nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16"
     rules:
       - host: sso.frontenac.tech
         paths:
