@@ -16,7 +16,8 @@ keycloak:
     rules:
       - host: sso.frontenac.tech
         paths:
-          - /
+          - path: /
+            pathType: Prefix
     tls:
     - hosts:
       - sso.frontenac.tech
