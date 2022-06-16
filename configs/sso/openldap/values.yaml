@@ -19,6 +19,7 @@ openldap:
 
   env:
     LDAP_ORGANISATION: "Fronenac Technology Services"
+    LDAP_TLS: "false"
 
   replication:
     enabled: true
