@@ -47,9 +47,9 @@ openldap:
       hosts:
       - ldap.k8s.frontenac.tech
       tls:
-      - secretName: seafile.frontenac.tech
+      - secretName: ldap.k8s.frontenac.tech
         hosts:
-        - seafile.frontenac.tech
+        - ldap.k8s.frontenac.tech
 
   ltb-passwd:
     enabled : false
