@@ -5,8 +5,8 @@ keycloak:
     - name: PROXY_ADDRESS_FORWARDING
       value: "true"
   extraEnvFrom: |
-    secretRef:
-      name: keycloak-auth-secret
+    - secretRef:
+        name: keycloak-auth-secret
 
   clusterDomain: k8s.frontenac.tech
 
