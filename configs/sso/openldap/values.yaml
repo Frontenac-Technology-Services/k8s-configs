@@ -39,3 +39,6 @@ openldap:
       pathType: Prefix
       hosts:
       - ldap.k8s.frontenac.tech
+
+  ltb-passwd:
+    enabled : false
