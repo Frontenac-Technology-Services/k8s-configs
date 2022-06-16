@@ -17,6 +17,11 @@ openldap:
 
   env:
     LDAP_ORGANISATION: "Fronenac Technology Services"
+
+
+  replication:
+    enabled: true
+    clusterName: "k8s.frontenac.tech"
   
   persistence:
     enabled: true
