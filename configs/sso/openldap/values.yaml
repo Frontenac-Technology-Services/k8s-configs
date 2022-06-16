@@ -3,7 +3,7 @@ openldap:
     ldapDomain: frontenac.tech
     storageClass: longhorn
 
-  clusterDomain: k8s.frontenac.tech
+  clusterDomain: ""
 
   image:
     pullPolicy: IfNotPresent
@@ -22,7 +22,7 @@ openldap:
 
   replication:
     enabled: true
-    clusterName: "k8s.frontenac.tech"
+    clusterName: ""
   
   persistence:
     enabled: true
