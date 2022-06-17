@@ -46,7 +46,9 @@ keycloak:
       image: alpine/git:v2.34.2
       imagePullPolicy: IfNotPresent
       args:
-        - clone git@github.com:Frontenac-Technology-Services/keycloak-fts-theme.git /theme/
+        - clone
+        - git@github.com:Frontenac-Technology-Services/keycloak-fts-theme.git
+        - /theme/
       volumeMounts:
         - name: fts-theme
           mountPath: /theme
