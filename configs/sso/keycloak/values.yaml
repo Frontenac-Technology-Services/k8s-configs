@@ -47,7 +47,7 @@ keycloak:
       imagePullPolicy: IfNotPresent
       args:
         - clone
-        - git@github.com:Frontenac-Technology-Services/keycloak-fts-theme.git
+        - https://github.com/Frontenac-Technology-Services/keycloak-fts-theme.git
         - /theme/
       volumeMounts:
         - name: fts-theme
