@@ -17,7 +17,7 @@ keycloak:
         cert-manager.io/cluster-issuer: letsencrypt-prod
         nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         nginx.ingress.kubernetes.io/ssl-redirect: "true"
-        cf.containeroo.ch/content: sso.frontenac.tech
+        cf.containeroo.ch/content: frontenac.tech
         cf.containeroo.ch/type: CNAME
     rules:
       - host: sso.frontenac.tech
