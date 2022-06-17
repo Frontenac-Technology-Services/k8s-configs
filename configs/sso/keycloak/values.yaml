@@ -24,6 +24,8 @@ keycloak:
         paths:
           - path: /auth/realms/master/protocol/openid-connect/auth
             pathType: Prefix
+          - path: /auth/resources
+            pathType: Prefix
     tls:
     - hosts:
       - sso.frontenac.tech
