@@ -22,7 +22,7 @@ keycloak:
     rules:
       - host: login.frontenac.tech
         paths:
-          - path: /
+          - path: /auth/realms/master/protocol/openid-connect/auth
             pathType: Prefix
     tls:
     - hosts:
@@ -38,7 +38,7 @@ keycloak:
       rules:
         - host: 'login.frontenac.tech'
           paths:
-            - path: /auth/admin/
+            - path: /
               pathType: Prefix
       tls:
       - hosts:
