@@ -50,7 +50,7 @@ keycloak:
       args:
         - clone git@github.com:Frontenac-Technology-Services/keycloak-fts-theme.git /theme
       volumeMounts:
-        - name: theme
+        - name: fts-theme
           mountPath: /theme
 
   extraVolumeMounts: |
