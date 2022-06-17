@@ -20,14 +20,14 @@ keycloak:
         cf.containeroo.ch/content: frontenac.tech
         cf.containeroo.ch/type: CNAME
     rules:
-      - host: login.frontenac.tech
+      - host: sso.frontenac.tech
         paths:
           - path: /auth/realms/master/protocol/openid-connect/auth
             pathType: Prefix
     tls:
     - hosts:
-      - login.frontenac.tech
-      secretName: login.frontenac.tech
+      - sso.frontenac.tech
+      secretName: sso.frontenac.tech
     console:
       enabled: true
       ingressClassName: nginx
@@ -36,14 +36,14 @@ keycloak:
         nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         nginx.ingress.kubernetes.io/ssl-redirect: "true"
       rules:
-        - host: 'login.frontenac.tech'
+        - host: 'sso.frontenac.tech'
           paths:
             - path: /
               pathType: Prefix
       tls:
       - hosts:
-        - login.frontenac.tech
-        secretName: login.frontenac.tech
+        - sso.frontenac.tech
+        secretName: sso.frontenac.tech
 
   args:
     - -Dkeycloak.profile.feature.docker=enabled
