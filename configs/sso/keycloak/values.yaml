@@ -39,3 +39,24 @@ keycloak:
     persistence:
       storageClass: longhorn
       size: 20Gi
+
+  # Custom Theme
+  extraInitContainers: |
+    - name: pull-custom-theme
+      image: alpine/git:v2.34.2
+      imagePullPolicy: IfNotPresent
+      command:
+        - git
+      args:
+        - clone git@github.com:Frontenac-Technology-Services/keycloak-fts-theme.git /theme
+      volumeMounts:
+        - name: theme
+          mountPath: /theme
+
+  extraVolumeMounts: |
+    - name: fts-theme
+      mountPath: /opt/jboss/keycloak/themes/fts-theme
+
+  extraVolumes: |
+    - name: fts-theme
+      emptyDir: {}
