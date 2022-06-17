@@ -19,14 +19,14 @@ keycloak:
         nginx.ingress.kubernetes.io/ssl-redirect: "true"
         nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16"
     rules:
-      - host: sso.frontenac.tech
+      - host: ssoadmin.frontenac.tech
         paths:
           - path: /
             pathType: Prefix
     tls:
     - hosts:
-      - sso.frontenac.tech
-      secretName: sso.frontenac.tech
+      - ssoadmin.frontenac.tech
+      secretName: ssoadmin.frontenac.tech
 
   args:
     - -Dkeycloak.profile.feature.docker=enabled
