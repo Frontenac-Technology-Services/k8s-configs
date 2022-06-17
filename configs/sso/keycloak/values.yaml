@@ -17,16 +17,33 @@ keycloak:
         cert-manager.io/cluster-issuer: letsencrypt-prod
         nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         nginx.ingress.kubernetes.io/ssl-redirect: "true"
-        nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16"
+        cf.containeroo.ch/content: frontenac.tech
+        cf.containeroo.ch/type: CNAME
     rules:
-      - host: ssoadmin.frontenac.tech
+      - host: login.frontenac.tech
         paths:
           - path: /
             pathType: Prefix
     tls:
     - hosts:
-      - ssoadmin.frontenac.tech
-      secretName: ssoadmin.frontenac.tech
+      - login.frontenac.tech
+      secretName: login.frontenac.tech
+    console:
+      enabled: true
+      ingressClassName: nginx
+      annotations:
+        nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      rules:
+        - host: 'login.frontenac.tech'
+          paths:
+            - path: /auth/admin/
+              pathType: Prefix
+      tls:
+      - hosts:
+        - login.frontenac.tech
+        secretName: login.frontenac.tech
 
   args:
     - -Dkeycloak.profile.feature.docker=enabled
