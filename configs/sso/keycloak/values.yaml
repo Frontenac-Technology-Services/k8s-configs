@@ -22,7 +22,7 @@ keycloak:
     rules:
       - host: sso.frontenac.tech
         paths:
-          - path: /auth/realms/master/protocol/openid-connect/auth
+          - path: /auth/realms/master/protocol/
             pathType: Prefix
           - path: /auth/resources
             pathType: Prefix
