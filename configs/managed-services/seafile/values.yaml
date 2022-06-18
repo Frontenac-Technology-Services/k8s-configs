@@ -1,5 +1,12 @@
 seafile:
 
+  image: 
+    repository: docker.seadrive.org/seafileltd/seafile-pro-mc
+    tag: 9.0.5
+
+  imagePullSecrets:
+    - name: image-pull-secret
+
   env:
     SEAFILE_ADMIN_EMAIL: admin@frontenac.tech
     SEAFILE_SERVER_HOSTNAME: seafile.frontenac.tech
