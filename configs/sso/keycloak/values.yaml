@@ -24,6 +24,8 @@ keycloak:
         paths:
           - path: /auth/realms/master/protocol/
             pathType: Prefix
+          - path: /auth/realms/master/login-actions/
+            pathType: Prefix
           - path: /auth/resources
             pathType: Prefix
     tls:
