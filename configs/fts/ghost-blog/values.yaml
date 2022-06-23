@@ -83,7 +83,8 @@ ghost:
   mysql:
     enabled: true
     architecture: standalone
-    existingSecret: mysql-credentials
+    auth:
+      existingSecret: mysql-credentials
     primary:
       persistence:
         enabled: true
