@@ -77,6 +77,8 @@ ghost:
     enabled: true
     storageClass: longhorn
     size: 25Gi
+    accessModes:
+    - ReadWriteMany
 
   mysql:
     enabled: true
