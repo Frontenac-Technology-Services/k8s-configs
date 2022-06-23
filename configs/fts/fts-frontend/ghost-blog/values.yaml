@@ -1,0 +1,85 @@
+ghost:
+
+  extraDeploy:
+  - apiVersion: bitnami.com/v1alpha1
+    kind: SealedSecret
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
+      creationTimestamp: null
+      name: ghost-credentials
+    spec:
+      encryptedData:
+        ghost-password: AgCXjCCigHhLhoGUGE96VNABXlLCupGWHkZnGKbh6tRefwXTF5W6MaKRiNajP3N27ZD5rNRrJbSU5Zmy7Au70HmenXEkOed7vHLfPG01mjqFPri9MK3RIyfvij2bEJi8GIg/yPoG7M08lkytCNPzJqDcsU6CqQfMe/+JFzHg1mkah8so7ORbzkN4dNJLanIBnSjl78diqrnE7hETO9GclKX3XNQ3pixT6L3Lhs+fHqh7hq0kMRpTL6OVX+XDLG5sR0cIVmB91qJMq+kJfr5HEcrPXy6rAaPx6jsKZO9FVRWsvwVd8iYcY47En+xiFqi5P7/NImGLBVamozNwNOShGSLA2k3HckbkomWf341bvZ+wmL9GqN2tNfWpfUWFnCGjOF82DoiP7rhlOIY5n8I1mYdW8ApSXBCAPJq/0BPKuAxKt+x6BveLfJmQHIq/1QUOOOYfmpVZImL92Kn+U+WQBmDlFvzWkSIqabB8m8rIjFWLaxBI2iCctrH/NAszPKvRyEk4OqjjgXQLT3Rvoqh4dluIfxeO1O0MnnkITodmyFmyCDj2eG2e9BmQndc9lUZl7M9wIi23zleYG+E4dzB+MGgf0tE7ysOjCS6iAnxkc9i0TI9BScM2EJox8vGeSynO9GjuhaoujbPZykdNxIELXn1Q5txaxCt1cl9akp5Tut/nwQT7u1R2vTjtgfUdV79oh8qBghF+YUgeyff9KA63gA==
+      template:
+        data: null
+        metadata:
+          annotations:
+            sealedsecrets.bitnami.com/cluster-wide: "true"
+          creationTimestamp: null
+          labels:
+          name: fts-ssh-github-creds
+        type: Opaque
+  - apiVersion: bitnami.com/v1alpha1
+    kind: SealedSecret
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
+      creationTimestamp: null
+      name: mysql-credentials
+    spec:
+      encryptedData:
+        MYSQL_ROOT_PASSWORD: AgAhKBi5dyT/Yb88Z5c8LvNJigGJKbVmPDMHbm5wyasAaiSPD0Co7kOi6lqwCY4oAXcriM8CY4V83XGaFJy0/sc6H7oxrKKlT1CWBsRiyX+EhkdJwe6+Tx91wtiTSGllZHVBhpus0upc42OkE3yCmcaMss29GfSNSo48zjCFuR86O/xO28F56KTCjmZXfMueLdSwCp0S/sV9uNeKMIa84qU0Uo3y9Erul2mdsveX/Zanfij6pzHXMV88t8RQ+0r7HP7e51kACfjzPrdhCZsMiSI6Bk1EbtF2X7jUEujLb3fY61ulNPLDd94yWous8dQl2gkFJK27a4UWNbCG4v5wcBXgBB9rfffTg+muyvgYd6+R5Fb30JEKqUnSMGGi3RQBtdtSVdmgO/uJsI/znQnIU1uGLGcWaCKT0TYMUR4q8584VaY53DChSTifKsfDbw/NtFe3gxGdf4yA622w5eVCnWvlJHhJI3OgwMK5ShI8ek1tZFkVcGtYSPVyQ3UNXS27Wnn2wCgMTL39h6X3y1iXyOQT4XkSQ9y8nIgBHHCdWb+QtqoiL5fwI1ZFiRRQVGyZgLPU3jpPpSpd834Q28axOym+JJqt4npXa4EIb1ju/3cTn+cipoIT1cGLwCLZA7BLTQ1hSBOnuopKKZ/d7aaSdGCndNyvODJiCKM1BrthoFHeytNYe30exJZQWbHupDa1mvRMJTbK+iMF9R+ISI/ksAvcm4jyA8WQs++1FUNw5wDmaQ==
+        MYSQL_PASSWORD: AgA/Tgqd53Bpj0Bgz40AVV79el5lClbMUoQmmPELgry3kN2kw5Uuawvz3zZoln+3xbus66Ht6Q4t+l+I/V0NJnIv2UbstCHIxsxUEWj0GUU8TwYZj2Fozr5l74ZF2jbV4vvs+F+0pSHTHWAb/Es+y705LTpKlcD/v7qiCXs5jRJZdeQp6nNau3zmVnmayhgz3yhKZBJ4vQwIiCK3zWR4Uflzkbr4bC48pz7vEb0pQpCrSqqYmZ8ZUtF4YumWrqzPtLYDViZrLjYoQHXvZzDU//eiCg7rQa8cRtN1KPTyhLtjjxyhTjSIn55dvZpwsAtS/Nq+kJ1Ym2qIIeg/RqS5qPjWFud78kosZ+DpEuXAVNxZU7vD4AaLYAxXnvhzn+t4eGKPl7iTZshBz8N5YhRgdXJgTK/SjuREJIQxkVvGm4+9dF9iYdp8IHVBiPXNDmmt4Cykgs+s6NkXNh1kLeJ5WXyiRDTRhx4UKOFXDVBb4dUC8qPt2BOtVDser6M4lkesx3Ucq6woQRkFvNg3DfI76ZwI+ANm2AcqxAeJzq6mFU6qb1QcfMPA8BGecBQiXFz7t8u45TE89cdixZ+rVtLWDG8laDC8V05Y9Q38i17gVsGIR6tq82WK3n5ILOpEFJ2j9SHAor7Yb0XnrpjNeUQ7r/DrfQREspp+ckBCGuikYWK5noG1+tqBbLj26wfE2K1AjB4a+WpTXbbrcUKjUpHzfeHfZ1XdaRU2hZUDbP9RrtgTBQ==
+      template:
+        data: null
+        metadata:
+          annotations:
+            sealedsecrets.bitnami.com/cluster-wide: "true"
+          creationTimestamp: null
+          labels:
+          name: fts-ssh-github-creds
+        type: Opaque
+
+  clusterDomain: k8s.frontenac.tech
+  ghostUsername: admin
+  existingSecret: ghost-credentials
+  ghostEmail: admin@frontenac.tech
+  ghostBlogTitle: FTS Blog
+  ghostHost: blog.frontenac.tech
+  ghostEnableHttps: true
+
+  smtpHost: smtp.smtp
+  smtpPort: 25
+  
+  allowEmptyPassword: false
+
+  ingress:
+    enabled: true
+    hostname: blog.frontenac.tech
+    tls: true
+    tlsSecret: blog.frontenac.tech
+    pathType: Prefix
+    path: /
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      cf.containeroo.ch/content: frontenac.tech
+      cf.containeroo.ch/type: CNAME
+
+  persistence:
+    enabled: true
+    storageClass: longhorn
+    size: 25Gi
+
+  mysql:
+    enabled: true
+    architecture: standalone
+    existingSecret: mysql-credentials
+    primary:
+      persistence:
+        enabled: true
+        storageClass: longhorn
+        size: 15Gi
