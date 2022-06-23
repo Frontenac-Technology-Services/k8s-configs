@@ -51,6 +51,10 @@ ghost:
 
   smtpHost: smtp.smtp
   smtpPort: 25
+
+  extraEnvVars:
+    - name: GHOST_SMTP_FROM_ADDRESS
+      value: noreply@frontenac.tech
   
   allowEmptyPassword: false
 
