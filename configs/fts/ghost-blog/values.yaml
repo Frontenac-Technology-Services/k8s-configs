@@ -76,7 +76,7 @@ ghost:
 
   persistence:
     enabled: true
-    storageClass: longhorn
+    storageClass: nfs
     size: 25Gi
     accessModes:
     - ReadWriteMany
@@ -89,5 +89,5 @@ ghost:
     primary:
       persistence:
         enabled: true
-        storageClass: longhorn
+        storageClass: nfs
         size: 15Gi
