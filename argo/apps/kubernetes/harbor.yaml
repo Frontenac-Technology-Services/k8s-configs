@@ -1,22 +1,22 @@
-# Create ArgoCD bootstrap application (App of Apps)
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: harbor
-  namespace: argocd
+# # Create ArgoCD bootstrap application (App of Apps)
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: harbor
+#   namespace: argocd
   
-spec:
-  project: kubernetes
-  source:
-    repoURL: git@github.com:Frontenac-Technology-Services/k8s-configs.git
-    targetRevision: master
-    path: configs/kubernetes/harbor
-    # Deploy application using helm
-    helm:
-      releaseName: harbor
-  destination:
-    name: in-cluster
-    namespace: harbor-system
-  syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
+# spec:
+#   project: kubernetes
+#   source:
+#     repoURL: git@github.com:Frontenac-Technology-Services/k8s-configs.git
+#     targetRevision: master
+#     path: configs/kubernetes/harbor
+#     # Deploy application using helm
+#     helm:
+#       releaseName: harbor
+#   destination:
+#     name: in-cluster
+#     namespace: harbor-system
+#   syncPolicy:
+#     syncOptions:
+#       - CreateNamespace=true
