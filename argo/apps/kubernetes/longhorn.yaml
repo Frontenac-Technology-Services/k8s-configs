@@ -18,6 +18,5 @@ spec:
     name: in-cluster
     namespace: longhorn-system
   syncPolicy:
-    automated: {}
     syncOptions:
       - CreateNamespace=true

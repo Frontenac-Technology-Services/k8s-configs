@@ -37,6 +37,5 @@ spec:
     name: in-cluster
     namespace: cloudflare-operator
   syncPolicy:
-    automated: {}
     syncOptions:
       - CreateNamespace=true

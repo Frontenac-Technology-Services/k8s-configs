@@ -17,6 +17,5 @@ spec:
     name: in-cluster
     namespace: ghost-blog
   syncPolicy:
-    automated: {}
     syncOptions:
       - CreateNamespace=true

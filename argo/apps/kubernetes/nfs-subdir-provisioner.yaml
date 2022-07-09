@@ -18,6 +18,5 @@ spec:
     name: in-cluster
     namespace: nfs-subdir-provisioner-system
   syncPolicy:
-    automated: {}
     syncOptions:
       - CreateNamespace=true

@@ -17,7 +17,6 @@ spec:
     name: in-cluster
     namespace: seafile
   syncPolicy:
-    automated: {}
     syncOptions:
       - CreateNamespace=true
 ---
