@@ -70,6 +70,7 @@ ghost:
       cert-manager.io/cluster-issuer: letsencrypt-prod
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/proxy-body-size: 30m
       cf.containeroo.ch/content: frontenac.tech
       cf.containeroo.ch/type: CNAME
 
